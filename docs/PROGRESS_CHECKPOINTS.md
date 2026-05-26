@@ -33,10 +33,10 @@
 - [x] **H-3: Role Routing**
   - [x] Fetch data role dari tabel `profiles` saat login berhasil.
   - [x] Arahkan Admin ke `/dashboard`, Kasir ke `/orders`.
-- [ ] **H-4 s.d H-7: Setup Navigasi Spesifik**
-  - [ ] Sempurnakan kerangka BottomNavigationBar.
+- [x] **H-4 s.d H-7: Setup Navigasi Spesifik**
+  - [x] Sempurnakan kerangka BottomNavigationBar.
   - [x] Sembunyikan tab Dashboard & Laporan khusus untuk role Kasir.
-  - [ ] Testing end-to-end alur login dan pembatasan akses.
+  - [x] Testing end-to-end alur login dan pembatasan akses.
 
 ---
 
