@@ -9,13 +9,14 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:laundry_jennaira/features/auth/auth_provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:laundry_jennaira/main.dart';
 
+import 'package:laundry_jennaira/shared/models/profile_model.dart';
+
 class MockAuthNotifier extends Auth {
   @override
-  FutureOr<User?> build() {
+  FutureOr<ProfileModel?> build() {
     return null;
   }
 

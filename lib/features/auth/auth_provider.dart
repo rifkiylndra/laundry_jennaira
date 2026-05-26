@@ -4,27 +4,56 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:laundry_jennaira/core/supabase_client.dart';
+import 'package:laundry_jennaira/shared/models/profile_model.dart';
 
 part 'auth_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Auth extends _$Auth {
   StreamSubscription<AuthState>? _subscription;
 
   @override
-  FutureOr<User?> build() {
+  FutureOr<ProfileModel?> build() async {
     final client = ref.watch(supabaseClientProvider);
     
-    // Listen to Supabase auth state changes and update state accordingly
-    _subscription = client.auth.onAuthStateChange.listen((data) {
-      state = AsyncValue.data(data.session?.user);
+    // Listen to Supabase auth state changes
+    _subscription = client.auth.onAuthStateChange.listen((data) async {
+      final user = data.session?.user;
+      if (user != null) {
+        try {
+          final profileData = await client
+              .from('profiles')
+              .select()
+              .eq('id', user.id)
+              .single();
+          state = AsyncValue.data(ProfileModel.fromJson(profileData));
+        } catch (e, st) {
+          state = AsyncValue.error(e, st);
+        }
+      } else {
+        state = const AsyncValue.data(null);
+      }
     });
 
     ref.onDispose(() {
       _subscription?.cancel();
     });
 
-    return client.auth.currentSession?.user;
+    // Initial load
+    final user = client.auth.currentSession?.user;
+    if (user != null) {
+      try {
+        final profileData = await client
+            .from('profiles')
+            .select()
+            .eq('id', user.id)
+            .single();
+        return ProfileModel.fromJson(profileData);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
   }
 
   Future<void> signIn(String email, String password) async {
@@ -35,7 +64,16 @@ class Auth extends _$Auth {
         email: email,
         password: password,
       );
-      state = AsyncValue.data(response.user);
+      
+      final user = response.user;
+      if (user != null) {
+        final profileData = await client
+            .from('profiles')
+            .select()
+            .eq('id', user.id)
+            .single();
+        state = AsyncValue.data(ProfileModel.fromJson(profileData));
+      }
     } catch (e, st) {
       state = AsyncValue.error(e, st);
       rethrow;

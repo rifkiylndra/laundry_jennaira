@@ -1,94 +1,99 @@
 // lib/features/auth/splash_screen.dart
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:laundry_jennaira/app/theme.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _checkSessionAndNavigate();
-  }
-
-  Future<void> _checkSessionAndNavigate() async {
-    // Wait for a brief moment (e.g. 1.5 seconds) to present branding
-    await Future.delayed(const Duration(milliseconds: 1500));
-    
-    Session? session;
-    try {
-      session = Supabase.instance.client.auth.currentSession;
-    } catch (e) {
-      // Handle unit/widget testing environments where Supabase is not initialized
-      debugPrint('Supabase not initialized: $e');
-    }
-
-    if (!mounted) return;
-
-    if (session != null) {
-      context.go('/dashboard');
-    } else {
-      context.go('/login');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppTheme.primaryColor,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Top spacer to push content down slightly for balance
+              const SizedBox(height: 40),
+              
+              // Center content
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Laundry Jennaira',
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: 0.5,
+                  // Logo Container
+                  Container(
+                    width: 180,
+                    height: 180,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.05),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.local_laundry_service,
+                        size: 80,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Laundry Jennaira',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Text(
-                    'Manajemen Laundry Pintar',
+                    'PREMIUM SERVICE',
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
-                      color: Colors.white70,
-                      letterSpacing: 0.5,
+                      color: Colors.white.withValues(alpha: 0.6),
+                      letterSpacing: 3.0,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 48),
-                child: SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.5,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
+              
+              // Bottom content
+              Padding(
+                padding: const EdgeInsets.only(bottom: 32.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3.0,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        backgroundColor: Colors.white24,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Text(
+                      '© 2024 Jennaira Collective',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 12,
+                        color: Colors.white.withValues(alpha: 0.4),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

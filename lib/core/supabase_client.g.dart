@@ -6,7 +6,7 @@ part of 'supabase_client.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$supabaseClientHash() => r'08438ff32a44c595bba28facff07df1fd321b281';
+String _$supabaseClientHash() => r'9a55f53247597b190611b01415e3c9db3f9559b5';
 
 /// Riverpod provider to access the Supabase client.
 ///
