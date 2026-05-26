@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Laundry Jennaira - Beranda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-highest": "#e0e3e5",
+                "surface-bright": "#f7f9fb",
+                "tertiary-container": "#003717",
+                "on-primary-fixed-variant": "#2c4678",
+                "on-primary-fixed": "#001a42",
+                "on-secondary-fixed": "#00174b",
+                "expense-red": "#991B1B",
+                "on-error": "#ffffff",
+                "surface-tint": "#455e91",
+                "on-tertiary-fixed-variant": "#005226",
+                "surface-dim": "#d8dadc",
+                "inverse-primary": "#aec6ff",
+                "outline-variant": "#c4c6d0",
+                "surface-container-lowest": "#ffffff",
+                "error-container": "#ffdad6",
+                "primary-fixed-dim": "#aec6ff",
+                "secondary-fixed-dim": "#b4c5ff",
+                "secondary-container": "#316bf3",
+                "primary-container": "#0f2d5e",
+                "on-surface": "#191c1e",
+                "surface": "#f7f9fb",
+                "tertiary-fixed-dim": "#8bd79b",
+                "income-green": "#166534",
+                "error": "#ba1a1a",
+                "surface-container-high": "#e6e8ea",
+                "on-primary-container": "#7d96cd",
+                "primary": "#00183f",
+                "surface-container": "#eceef0",
+                "on-secondary": "#ffffff",
+                "outline": "#747780",
+                "secondary": "#0051d5",
+                "on-background": "#191c1e",
+                "warning-orange": "#9A3412",
+                "tertiary-fixed": "#a6f4b5",
+                "inverse-surface": "#2d3133",
+                "on-surface-variant": "#44474f",
+                "text-primary": "#374151",
+                "on-primary": "#ffffff",
+                "on-tertiary-fixed": "#00210b",
+                "inverse-on-surface": "#eff1f3",
+                "background": "#f7f9fb",
+                "on-secondary-container": "#fefcff",
+                "on-tertiary-container": "#5ba66d",
+                "primary-fixed": "#d8e2ff",
+                "text-secondary": "#64748B",
+                "surface-container-low": "#f2f4f6",
+                "secondary-fixed": "#dbe1ff",
+                "tertiary": "#001f0a",
+                "surface-variant": "#e0e3e5",
+                "on-secondary-fixed-variant": "#003ea8",
+                "on-tertiary": "#ffffff",
+                "on-error-container": "#93000a",
+                "surface-card": "#FFFFFF"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "edge-margin": "1rem",
+                "stack-lg": "1.5rem",
+                "gutter-md": "1rem",
+                "stack-sm": "0.5rem",
+                "stack-md": "1rem"
+            },
+            "fontFamily": {
+                "body-lg": ["Inter"],
+                "label-md": ["Inter"],
+                "numeric-display": ["Inter"],
+                "headline-md": ["Inter"],
+                "title-lg": ["Inter"],
+                "label-lg": ["Inter"],
+                "headline-lg": ["Inter"],
+                "body-md": ["Inter"]
+            },
+            "fontSize": {
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                "numeric-display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Inter', sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .soft-shadow {
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      .bar-chart-container {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        height: 120px;
+        padding-top: 1rem;
+      }
+      .bar-item {
+        width: 10%;
+        background-color: #2563EB;
+        border-radius: 4px 4px 0 0;
+        transition: height 1s ease-out;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim shadow-sm flex justify-between items-center px-edge-margin h-16 w-full max-w-full sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<img alt="Logo" class="w-8 h-8 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ugPXyIfD3_FMkjgAv-nzPzJ0T9MWU_BioAwZzsNdxdCg2CsOKIRIgihu6NBAXg9q81R5lSbsKrMDnyhT2QESss109a0OGK3HzBu9NBMYGLkxfOH3veXOj1nSjzdrAcKRG49MZt6zpFZb6QiBGlUN0h8JlZdIdXTohNCQXEaJuSTXG7HPHBW9HPmsUM92GDXah8n_eHaBmiDDtU7GDYbaNV8kC1DJilLrkKqMJ6ypZvzwMvfldGqJLepXMZR"/>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed-dim">Laundry Jennaira</h1>
+</div>
+<button class="hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="px-edge-margin pt-6 space-y-stack-lg">
+<!-- Hero: Summary Cards -->
+<section class="grid grid-cols-3 gap-3 overflow-x-auto pb-2">
+<div class="bg-surface-card soft-shadow rounded-xl p-4 flex flex-col min-w-[120px]">
+<span class="font-label-md text-label-md text-text-secondary mb-1">Saldo</span>
+<span class="font-title-lg text-title-lg text-text-primary">Rp 2.4M</span>
+</div>
+<div class="bg-surface-card soft-shadow rounded-xl p-4 flex flex-col min-w-[120px]">
+<span class="font-label-md text-label-md text-text-secondary mb-1">Omzet</span>
+<span class="font-title-lg text-title-lg text-text-primary">Rp 850k</span>
+</div>
+<div class="bg-surface-card soft-shadow rounded-xl p-4 flex flex-col min-w-[120px]">
+<span class="font-label-md text-label-md text-text-secondary mb-1">Profit</span>
+<span class="font-title-lg text-title-lg text-income-green">Rp 420k</span>
+</div>
+</section>
+<!-- Chart Section -->
+<section class="bg-surface-card soft-shadow rounded-xl p-edge-margin">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-title-lg text-title-lg text-text-primary">7 Hari Terakhir</h2>
+<span class="font-label-md text-label-md text-secondary">Lihat Detail</span>
+</div>
+<div class="bar-chart-container">
+<div class="bar-item" style="height: 40%;"></div>
+<div class="bar-item" style="height: 65%;"></div>
+<div class="bar-item" style="height: 85%;"></div>
+<div class="bar-item" style="height: 55%;"></div>
+<div class="bar-item" style="height: 95%;"></div>
+<div class="bar-item" style="height: 70%;"></div>
+<div class="bar-item" style="height: 100%;"></div>
+</div>
+<div class="flex justify-between mt-2 px-1">
+<span class="text-[10px] text-text-secondary font-medium">Sen</span>
+<span class="text-[10px] text-text-secondary font-medium">Sel</span>
+<span class="text-[10px] text-text-secondary font-medium">Rab</span>
+<span class="text-[10px] text-text-secondary font-medium">Kam</span>
+<span class="text-[10px] text-text-secondary font-medium">Jum</span>
+<span class="text-[10px] text-text-secondary font-medium">Sab</span>
+<span class="text-[10px] text-text-secondary font-medium">Min</span>
+</div>
+</section>
+<!-- Quick Actions Grid -->
+<section>
+<h2 class="font-title-lg text-title-lg text-text-primary mb-4">Layanan Cepat</h2>
+<div class="grid grid-cols-2 gap-4">
+<!-- Kiloan -->
+<button class="bg-primary-container h-28 rounded-xl flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform hover:brightness-110">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="local_laundry_service">local_laundry_service</span>
+<span class="font-label-lg text-label-lg text-white">Kiloan</span>
+</button>
+<!-- Satuan -->
+<button class="border-2 border-primary-container bg-surface-card h-28 rounded-xl flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="checkroom">checkroom</span>
+<span class="font-label-lg text-label-lg text-primary-container">Satuan</span>
+</button>
+<!-- Setrika -->
+<button class="border-2 border-primary-container bg-surface-card h-28 rounded-xl flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="iron">iron</span>
+<span class="font-label-lg text-label-lg text-primary-container">Setrika</span>
+</button>
+<!-- Express -->
+<button class="bg-primary-container h-28 rounded-xl flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform hover:brightness-110">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="bolt">bolt</span>
+<span class="font-label-lg text-label-lg text-white">Express</span>
+</button>
+</div>
+</section>
+<!-- Inventory Warning (Adhering to Style Guidelines for Low Stock) -->
+<section class="border border-expense-red bg-surface-card rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-expense-red" data-icon="warning">warning</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-text-primary">Stok Deterjen Rendah</h3>
+<p class="font-label-md text-label-md text-text-secondary">Sisa 1.2 Liter (Estimasi 2 hari)</p>
+</div>
+</div>
+<button class="text-secondary font-label-lg">Isi Ulang</button>
+</section>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-white rounded-full flex items-center justify-center shadow-lg active:scale-90 duration-200 z-40">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-surface-container-lowest dark:bg-surface-container-low shadow-[0_-2px_8px_rgba(0,0,0,0.05)] rounded-t-xl">
+<!-- Beranda (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container dark:bg-secondary dark:text-on-secondary rounded-full px-5 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Beranda</span>
+</a>
+<!-- Order -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 active:scale-90 duration-200 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">Order</span>
+</a>
+<!-- Transaksi -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 active:scale-90 duration-200 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Transaksi</span>
+</a>
+<!-- Laporan -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 active:scale-90 duration-200 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="font-label-md text-label-md">Laporan</span>
+</a>
+</nav>
+<script>
+        // Simple animation for bar items on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.bar-item');
+            bars.forEach(bar => {
+                const height = bar.style.height;
+                bar.style.height = '0';
+                setTimeout(() => {
+                    bar.style.height = height;
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

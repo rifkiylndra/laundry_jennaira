@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Transaction - Laundry Jennaira</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#2d3133",
+                        "text-primary": "#374151",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed": "#00174b",
+                        "on-surface": "#191c1e",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#0f2d5e",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "secondary-fixed": "#dbe1ff",
+                        "inverse-primary": "#aec6ff",
+                        "outline": "#747780",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#00210b",
+                        "primary": "#00183f",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "on-surface-variant": "#44474f",
+                        "tertiary-fixed-dim": "#8bd79b",
+                        "outline-variant": "#c4c6d0",
+                        "warning-orange": "#9A3412",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-container": "#7d96cd",
+                        "surface-variant": "#e0e3e5",
+                        "inverse-on-surface": "#eff1f3",
+                        "expense-red": "#991B1B",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#fefcff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary-container": "#5ba66d",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001a42",
+                        "surface-card": "#FFFFFF",
+                        "text-secondary": "#64748B",
+                        "on-primary-fixed-variant": "#2c4678",
+                        "tertiary": "#001f0a",
+                        "surface-bright": "#f7f9fb",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "primary-fixed-dim": "#aec6ff",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed": "#a6f4b5",
+                        "tertiary-container": "#003717",
+                        "secondary": "#0051d5",
+                        "secondary-container": "#316bf3",
+                        "income-green": "#166534",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#455e91",
+                        "surface-dim": "#d8dadc",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-background": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "gutter-md": "1rem",
+                        "stack-lg": "1.5rem",
+                        "stack-sm": "0.5rem",
+                        "edge-margin": "1rem"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "numeric-display": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "numeric-display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .active-segment {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .category-card {
+            transition: all 0.2s ease;
+        }
+        
+        .category-card:active {
+            transform: scale(0.95);
+        }
+
+        .category-card.selected {
+            border-color: #0F2D5E;
+            background-color: #f2f4f6;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col font-body-md text-text-primary">
+<!-- Top App Bar -->
+<header class="bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container shadow-sm flex items-center px-edge-margin h-16 w-full z-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">local_laundry_service</span>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Laundry Jennaira</h1>
+</div>
+</header>
+<!-- Main Content Context (Background Placeholder) -->
+<main class="flex-1 p-edge-margin overflow-y-auto">
+<div class="max-w-md mx-auto space-y-stack-lg opacity-40 grayscale pointer-events-none">
+<div class="bg-surface-card rounded-xl p-4 shadow-sm">
+<div class="h-4 w-24 bg-surface-container rounded mb-4"></div>
+<div class="h-24 w-full bg-surface-container rounded"></div>
+</div>
+<div class="bg-surface-card rounded-xl p-4 shadow-sm">
+<div class="h-4 w-32 bg-surface-container rounded mb-4"></div>
+<div class="space-y-2">
+<div class="h-12 w-full bg-surface-container rounded"></div>
+<div class="h-12 w-full bg-surface-container rounded"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Scrim / Backdrop -->
+<div class="fixed inset-0 bg-on-background/40 backdrop-blur-sm z-40 transition-opacity duration-300 opacity-100" id="modal-backdrop"></div>
+<!-- Modal Bottom Sheet -->
+<div class="fixed bottom-0 left-0 right-0 z-50 transform transition-transform duration-500 ease-out translate-y-0 max-w-2xl mx-auto w-full" id="transaction-modal">
+<div class="bg-surface rounded-t-3xl shadow-2xl p-edge-margin pb-10 flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
+<!-- Handle Indicator -->
+<div class="w-12 h-1.5 bg-outline-variant/50 rounded-full self-center mb-6"></div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-lg text-title-lg text-text-primary">Tambah Transaksi</h2>
+<img alt="Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida/ADBb0ugPXyIfD3_FMkjgAv-nzPzJ0T9MWU_BioAwZzsNdxdCg2CsOKIRIgihu6NBAXg9q81R5lSbsKrMDnyhT2QESss109a0OGK3HzBu9NBMYGLkxfOH3veXOj1nSjzdrAcKRG49MZt6zpFZb6QiBGlUN0h8JlZdIdXTohNCQXEaJuSTXG7HPHBW9HPmsUM92GDXah8n_eHaBmiDDtU7GDYbaNV8kC1DJilLrkKqMJ6ypZvzwMvfldGqJLepXMZR"/>
+</div>
+<!-- 1. Segmented Control -->
+<div class="bg-surface-container-low p-1 rounded-full flex mb-6 relative overflow-hidden">
+<div class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-surface-container-lowest rounded-full shadow-sm active-segment" id="segment-indicator"></div>
+<button class="flex-1 py-2.5 z-10 font-label-lg text-label-lg transition-colors duration-300 text-income-green font-bold" onclick="switchSegment('in')">Pemasukan</button>
+<button class="flex-1 py-2.5 z-10 font-label-lg text-label-lg transition-colors duration-300 text-text-secondary" onclick="switchSegment('out')">Pengeluaran</button>
+</div>
+<!-- 2. Category Grid -->
+<div class="mb-8">
+<p class="font-label-md text-label-md text-text-secondary mb-3 uppercase tracking-wider">Kategori</p>
+<div class="grid grid-cols-3 gap-3">
+<button class="category-card flex flex-col items-center justify-center p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)] selected" onclick="selectCategory(this)">
+<span class="material-symbols-outlined text-primary mb-2">soap</span>
+<span class="font-label-md text-label-md">Deterjen</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)]" onclick="selectCategory(this)">
+<span class="material-symbols-outlined text-primary mb-2">bolt</span>
+<span class="font-label-md text-label-md">Listrik</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)]" onclick="selectCategory(this)">
+<span class="material-symbols-outlined text-primary mb-2">home_work</span>
+<span class="font-label-md text-label-md">Sewa</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)]" onclick="selectCategory(this)">
+<span class="material-symbols-outlined text-primary mb-2">payments</span>
+<span class="font-label-md text-label-md">Gaji</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)]" onclick="selectCategory(this)">
+<span class="material-symbols-outlined text-primary mb-2">cleaning_services</span>
+<span class="font-label-md text-label-md">Alat Cuci</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)]" onclick="selectCategory(this)">
+<span class="material-symbols-outlined text-primary mb-2">more_horiz</span>
+<span class="font-label-md text-label-md">Lain-lain</span>
+</button>
+</div>
+</div>
+<!-- 3. Numeric Input -->
+<div class="mb-8 text-center px-4">
+<p class="font-label-md text-label-md text-text-secondary mb-1">Jumlah Transaksi</p>
+<div class="flex items-center justify-center">
+<span class="font-numeric-display text-numeric-display text-text-primary opacity-50 mr-2">Rp</span>
+<input autofocus="" class="w-full font-numeric-display text-numeric-display text-text-primary bg-transparent border-none focus:ring-0 text-center placeholder:text-surface-container-highest" placeholder="0" type="number"/>
+</div>
+<div class="h-0.5 w-full bg-outline-variant/20 mt-2"></div>
+</div>
+<!-- 4. Form Bottom -->
+<div class="space-y-4">
+<div class="relative">
+<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded-xl px-4 py-3 font-body-md focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none" placeholder="Catatan transaksi..." type="text"/>
+</div>
+<button class="flex items-center justify-center gap-2 w-full py-2 text-secondary font-label-lg transition-all hover:bg-secondary-container/10 rounded-lg">
+<span class="material-symbols-outlined">add_a_photo</span>
+<span>Upload Foto</span>
+</button>
+<button class="w-full bg-primary-container text-white py-4 rounded-xl font-title-lg shadow-lg hover:shadow-xl active:scale-[0.98] transition-all duration-200">
+                    Simpan Transaksi
+                </button>
+</div>
+</div>
+</div>
+<script>
+        function switchSegment(type) {
+            const indicator = document.getElementById('segment-indicator');
+            const buttons = document.querySelectorAll('.bg-surface-container-low button');
+            
+            if (type === 'out') {
+                indicator.style.left = 'calc(50% - 0px)';
+                buttons[0].classList.replace('font-bold', 'font-medium');
+                buttons[0].classList.replace('text-income-green', 'text-text-secondary');
+                buttons[1].classList.replace('text-text-secondary', 'text-expense-red');
+                buttons[1].classList.add('font-bold');
+            } else {
+                indicator.style.left = '4px';
+                buttons[0].classList.replace('text-text-secondary', 'text-income-green');
+                buttons[0].classList.add('font-bold');
+                buttons[1].classList.replace('font-bold', 'font-medium');
+                buttons[1].classList.replace('text-expense-red', 'text-text-secondary');
+            }
+        }
+
+        function selectCategory(element) {
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('selected', 'bg-surface-container-low', 'border-primary-container');
+            });
+            element.classList.add('selected', 'bg-surface-container-low');
+        }
+
+        // Simple modal interactions
+        const backdrop = document.getElementById('modal-backdrop');
+        const modal = document.getElementById('transaction-modal');
+
+        function closeModal() {
+            modal.style.transform = 'translateY(100%)';
+            backdrop.style.opacity = '0';
+            setTimeout(() => {
+                backdrop.style.display = 'none';
+            }, 300);
+        }
+
+        backdrop.addEventListener('click', closeModal);
+    </script>
+</body></html>

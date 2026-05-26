@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Order List - Laundry Jennaira</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "warning-orange": "#9A3412",
+                    "primary": "#00183f",
+                    "tertiary-container": "#003717",
+                    "on-tertiary-fixed-variant": "#005226",
+                    "on-secondary-fixed": "#00174b",
+                    "surface-container-highest": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "tertiary-fixed-dim": "#8bd79b",
+                    "on-background": "#191c1e",
+                    "text-primary": "#374151",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#dbe1ff",
+                    "on-primary-container": "#7d96cd",
+                    "on-primary-fixed-variant": "#2c4678",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#316bf3",
+                    "on-surface-variant": "#44474f",
+                    "inverse-primary": "#aec6ff",
+                    "income-green": "#166534",
+                    "on-tertiary-fixed": "#00210b",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e6e8ea",
+                    "secondary": "#0051d5",
+                    "outline-variant": "#c4c6d0",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "on-surface": "#191c1e",
+                    "surface-tint": "#455e91",
+                    "surface-card": "#FFFFFF",
+                    "surface": "#f7f9fb",
+                    "expense-red": "#991B1B",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#001a42",
+                    "tertiary-fixed": "#a6f4b5",
+                    "on-tertiary-container": "#5ba66d",
+                    "text-secondary": "#64748B",
+                    "primary-fixed-dim": "#aec6ff",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container-low": "#f2f4f6",
+                    "tertiary": "#001f0a",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "primary-container": "#0f2d5e",
+                    "surface-container": "#eceef0",
+                    "on-secondary-container": "#fefcff",
+                    "surface-dim": "#d8dadc",
+                    "outline": "#747780",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "1.5rem",
+                    "stack-sm": "0.5rem",
+                    "stack-md": "1rem",
+                    "gutter-md": "1rem",
+                    "edge-margin": "1rem"
+            },
+            "fontFamily": {
+                    "label-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "numeric-display": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                    "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "numeric-display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab-line {
+            height: 3px;
+            background-color: #2563EB;
+            border-radius: 3px 3px 0 0;
+        }
+        .order-card-shadow {
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface min-h-screen text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="bg-primary shadow-sm flex items-center px-edge-margin h-16 w-full fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-primary text-[28px]">local_laundry_service</span>
+<h1 class="font-headline-md text-headline-md font-bold text-on-primary">Laundry Jennaira</h1>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="pt-20 pb-32 px-edge-margin">
+<!-- Search Bar Section -->
+<section class="mb-stack-md">
+<div class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-4 text-on-surface-variant group-focus-within:text-secondary transition-colors">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 pl-12 pr-4 text-body-lg focus:ring-2 focus:ring-secondary transition-all outline-none placeholder:text-on-surface-variant/60" placeholder="Cari Order..." type="text"/>
+</div>
+</section>
+<!-- Tab Navigation -->
+<nav class="flex border-b border-outline-variant/30 mb-stack-md sticky top-16 bg-surface z-40">
+<button class="flex-1 py-3 font-label-lg text-label-lg text-secondary relative" onclick="switchTab(this)">
+                Semua
+                <div class="active-tab-line absolute bottom-0 left-0 w-full"></div>
+</button>
+<button class="flex-1 py-3 font-label-lg text-label-lg text-on-surface-variant hover:text-secondary transition-colors relative" onclick="switchTab(this)">
+                Aktif
+                <div class="active-tab-line absolute bottom-0 left-0 w-full hidden"></div>
+</button>
+<button class="flex-1 py-3 font-label-lg text-label-lg text-on-surface-variant hover:text-secondary transition-colors relative" onclick="switchTab(this)">
+                Selesai
+                <div class="active-tab-line absolute bottom-0 left-0 w-full hidden"></div>
+</button>
+</nav>
+<!-- Order List -->
+<div class="space-y-stack-md" id="order-container">
+<!-- Order Card 1: Proses -->
+<div class="bg-surface-card order-card-shadow rounded-xl p-4 flex items-start justify-between border-l-4 border-secondary transition-transform active:scale-[0.98]">
+<div class="space-y-1">
+<p class="font-title-lg text-title-lg text-on-surface">LJ-20250115-001</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Budi Santoso</p>
+<div class="flex items-center gap-3 mt-2">
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">weight</span>
+<span class="font-label-md text-label-md">5.0 kg</span>
+</div>
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span class="font-label-md text-label-md">Rp 45.000</span>
+</div>
+</div>
+</div>
+<span class="bg-secondary/10 text-secondary font-label-md text-label-md px-3 py-1 rounded-full whitespace-nowrap">Proses</span>
+</div>
+<!-- Order Card 2: Siap Diambil -->
+<div class="bg-surface-card order-card-shadow rounded-xl p-4 flex items-start justify-between border-l-4 border-warning-orange transition-transform active:scale-[0.98]">
+<div class="space-y-1">
+<p class="font-title-lg text-title-lg text-on-surface font-bold">LJ-20250115-002</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Siti Aminah</p>
+<div class="flex items-center gap-3 mt-2">
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">weight</span>
+<span class="font-label-md text-label-md">3.2 kg</span>
+</div>
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span class="font-label-md text-label-md">Rp 28.000</span>
+</div>
+</div>
+</div>
+<span class="bg-warning-orange/10 text-warning-orange font-label-md text-label-md px-3 py-1 rounded-full whitespace-nowrap">Siap Diambil</span>
+</div>
+<!-- Order Card 3: Selesai -->
+<div class="bg-surface-card order-card-shadow rounded-xl p-4 flex items-start justify-between border-l-4 border-income-green transition-transform active:scale-[0.98]">
+<div class="space-y-1">
+<p class="font-title-lg text-title-lg text-on-surface font-bold">LJ-20250115-003</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Andi Pratama</p>
+<div class="flex items-center gap-3 mt-2">
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">weight</span>
+<span class="font-label-md text-label-md">10.0 kg</span>
+</div>
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span class="font-label-md text-label-md">Rp 90.000</span>
+</div>
+</div>
+</div>
+<span class="bg-income-green/10 text-income-green font-label-md text-label-md px-3 py-1 rounded-full whitespace-nowrap">Selesai</span>
+</div>
+<!-- Order Card 4: Proses -->
+<div class="bg-surface-card order-card-shadow rounded-xl p-4 flex items-start justify-between border-l-4 border-secondary transition-transform active:scale-[0.98]">
+<div class="space-y-1">
+<p class="font-title-lg text-title-lg text-on-surface font-bold">LJ-20250115-004</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Dewi Lestari</p>
+<div class="flex items-center gap-3 mt-2">
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">weight</span>
+<span class="font-label-md text-label-md">4.5 kg</span>
+</div>
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span class="font-label-md text-label-md">Rp 40.000</span>
+</div>
+</div>
+</div>
+<span class="bg-secondary/10 text-secondary font-label-md text-label-md px-3 py-1 rounded-full whitespace-nowrap">Proses</span>
+</div>
+<!-- Order Card 5: Siap Diambil -->
+<div class="bg-surface-card order-card-shadow rounded-xl p-4 flex items-start justify-between border-l-4 border-warning-orange transition-transform active:scale-[0.98]">
+<div class="space-y-1">
+<p class="font-title-lg text-title-lg text-on-surface font-bold">LJ-20250115-005</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Rian Hidayat</p>
+<div class="flex items-center gap-3 mt-2">
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">weight</span>
+<span class="font-label-md text-label-md">2.0 kg</span>
+</div>
+<div class="flex items-center gap-1 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span class="font-label-md text-label-md">Rp 18.000</span>
+</div>
+</div>
+</div>
+<span class="bg-warning-orange/10 text-warning-orange font-label-md text-label-md px-3 py-1 rounded-full whitespace-nowrap">Siap Diambil</span>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary rounded-xl flex items-center justify-center shadow-xl hover:bg-primary transition-all active:scale-95 z-40 group">
+<span class="material-symbols-outlined text-[32px] group-hover:rotate-90 transition-transform">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface border-t border-outline-variant/30 shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md mt-1">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-label-md text-label-md mt-1">Order</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md mt-1">Transaksi</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md mt-1">Laporan</span>
+</a>
+</nav>
+<script>
+        function switchTab(element) {
+            // Remove active classes from all buttons
+            const buttons = element.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('text-secondary');
+                btn.classList.add('text-on-surface-variant');
+                btn.querySelector('.active-tab-line').classList.add('hidden');
+            });
+
+            // Add active classes to clicked button
+            element.classList.remove('text-on-surface-variant');
+            element.classList.add('text-secondary');
+            element.querySelector('.active-tab-line').classList.remove('hidden');
+
+            // Logic to filter list (Simulation)
+            const list = document.getElementById('order-container');
+            list.style.opacity = '0';
+            setTimeout(() => {
+                list.style.opacity = '1';
+                list.style.transition = 'opacity 0.3s ease';
+            }, 50);
+        }
+
+        // Search highlight interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('#order-container > div');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if(text.includes(val)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body></html>

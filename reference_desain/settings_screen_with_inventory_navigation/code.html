@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0f2d5e",
+                        "tertiary-fixed": "#a6f4b5",
+                        "surface-container": "#eceef0",
+                        "on-surface": "#191c1e",
+                        "outline-variant": "#c4c6d0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "on-primary-container": "#7d96cd",
+                        "expense-red": "#991B1B",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2d3133",
+                        "warning-orange": "#9A3412",
+                        "surface-variant": "#e0e3e5",
+                        "text-primary": "#374151",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-primary": "#aec6ff",
+                        "surface-card": "#FFFFFF",
+                        "surface": "#F8FAFC",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#0f2d5e",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "surface-bright": "#f7f9fb",
+                        "income-green": "#166534",
+                        "secondary": "#0051d5",
+                        "on-tertiary-fixed": "#00210b",
+                        "on-secondary-fixed": "#00174b",
+                        "on-tertiary-container": "#5ba66d",
+                        "on-primary-fixed-variant": "#2c4678",
+                        "background": "#F8FAFC",
+                        "on-primary-fixed": "#001a42",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#dbe1ff",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-container": "#003717",
+                        "secondary-container": "#316bf3",
+                        "tertiary": "#001f0a",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface-variant": "#44474f",
+                        "primary-fixed-dim": "#aec6ff",
+                        "surface-dim": "#d8dadc",
+                        "outline": "#747780",
+                        "on-secondary": "#ffffff",
+                        "text-secondary": "#64748B",
+                        "surface-tint": "#455e91",
+                        "tertiary-fixed-dim": "#8bd79b",
+                        "surface-container-high": "#e6e8ea",
+                        "on-secondary-container": "#fefcff",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#b4c5ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "1.5rem",
+                        "stack-md": "1rem",
+                        "gutter-md": "1rem",
+                        "edge-margin": "1rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "numeric-display": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "numeric-display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-bg {
+            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .active-nav-bg:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- Top AppBar -->
+<header class="bg-primary shadow-sm fixed top-0 w-full z-50 flex items-center px-edge-margin h-16">
+<div class="flex items-center gap-4">
+<button aria-label="Kembali" class="p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined text-white">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-white">Pengaturan</h1>
+</div>
+</header>
+<main class="pt-20 px-edge-margin max-w-2xl mx-auto space-y-stack-lg">
+<!-- Profile/Header Section -->
+<section class="bg-surface-card rounded-xl shadow-[0px_2px_12px_rgba(0,0,0,0.06)] p-stack-md flex items-center gap-4 border border-outline-variant/10">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center shrink-0">
+<img alt="Laundry Jennaira Logo" class="w-12 h-12 object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ugPXyIfD3_FMkjgAv-nzPzJ0T9MWU_BioAwZzsNdxdCg2CsOKIRIgihu6NBAXg9q81R5lSbsKrMDnyhT2QESss109a0OGK3HzBu9NBMYGLkxfOH3veXOj1nSjzdrAcKRG49MZt6zpFZb6QiBGlUN0h8JlZdIdXTohNCQXEaJuSTXG7HPHBW9HPmsUM92GDXah8n_eHaBmiDDtU7GDYbaNV8kC1DJilLrkKqMJ6ypZvzwMvfldGqJLepXMZR"/>
+</div>
+<div class="flex flex-col">
+<h2 class="font-title-lg text-title-lg text-primary">Laundry Jennaira</h2>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-text-secondary">Admin Panel</span>
+<span class="w-1 h-1 rounded-full bg-outline/40"></span>
+<span class="font-label-md text-label-md text-text-secondary">v1.0.4</span>
+</div>
+</div>
+</section>
+<!-- Settings List Container -->
+<section class="bg-surface-card rounded-xl shadow-[0px_2px_12px_rgba(0,0,0,0.06)] overflow-hidden border border-outline-variant/10">
+<!-- Item 1: Edit Tarif -->
+<button class="w-full flex items-center justify-between p-stack-md hover:bg-surface-container-low transition-colors active:bg-surface-container text-left group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="font-body-lg text-body-lg text-text-primary">Edit Tarif Layanan</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<div class="mx-stack-md h-px bg-outline-variant/20"></div>
+<!-- Item 2: Info Usaha -->
+<button class="w-full flex items-center justify-between p-stack-md hover:bg-surface-container-low transition-colors active:bg-surface-container text-left group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<span class="font-body-lg text-body-lg text-text-primary">Info Usaha</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<div class="mx-stack-md h-px bg-outline-variant/20"></div>
+<!-- Item 3: Generate QRIS -->
+<button class="w-full flex items-center justify-between p-stack-md hover:bg-surface-container-low transition-colors active:bg-surface-container text-left group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">qr_code_2</span>
+</div>
+<span class="font-body-lg text-body-lg text-text-primary">Generate QRIS</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<div class="mx-stack-md h-px bg-outline-variant/20"></div>
+<!-- Item 4: Manajemen Stok (Inventory) -->
+<button class="w-full flex items-center justify-between p-stack-md hover:bg-surface-container-low transition-colors active:bg-surface-container text-left group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="font-body-lg text-body-lg text-text-primary">Manajemen Stok (Inventory)</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<div class="mx-stack-md h-px bg-outline-variant/20"></div>
+<!-- Item 5: Tutup Buku -->
+<button class="w-full flex items-center justify-between p-stack-md hover:bg-surface-container-low transition-colors active:bg-surface-container text-left group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<span class="font-body-lg text-body-lg text-text-primary">Tutup Buku Harian</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<div class="mx-stack-md h-px bg-outline-variant/20"></div>
+<!-- Item 6: Keluar (Danger) -->
+<button class="w-full flex items-center justify-between p-stack-md hover:bg-expense-red/5 transition-colors active:bg-expense-red/10 text-left group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-expense-red/10 flex items-center justify-center text-expense-red">
+<span class="material-symbols-outlined">logout</span>
+</div>
+<span class="font-body-lg text-body-lg text-expense-red font-medium">Keluar</span>
+</div>
+<span class="material-symbols-outlined text-expense-red/60 group-hover:translate-x-1 transition-transform">logout</span>
+</button>
+</section>
+<!-- Extra Footer Detail -->
+<div class="text-center pb-8">
+<p class="font-label-md text-label-md text-text-secondary">Laundry Jennaira Business Suite</p>
+<p class="font-label-md text-label-md text-text-secondary/60">Managed by System Admin</p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-card border-t border-outline-variant/30 shadow-lg">
+<a class="flex flex-col items-center justify-center text-text-secondary px-5 py-1 hover:bg-surface-container-high transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary px-5 py-1 hover:bg-surface-container-high transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Order</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary px-5 py-1 hover:bg-surface-container-high transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Transaksi</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary px-5 py-1 hover:bg-surface-container-high transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Laporan</span>
+</a>
+</nav>
+<script>
+        // Simple scale effect for interactions
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('mousedown', function(e) {
+                this.classList.add('scale-[0.98]');
+                setTimeout(() => {
+                    this.classList.remove('scale-[0.98]');
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

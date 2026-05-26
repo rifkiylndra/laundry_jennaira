@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transaksi - Laundry Jennaira</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary": "#00183f",
+                "outline-variant": "#c4c6d0",
+                "on-secondary-fixed-variant": "#003ea8",
+                "inverse-on-surface": "#eff1f3",
+                "secondary-fixed": "#dbe1ff",
+                "error-container": "#ffdad6",
+                "on-surface": "#191c1e",
+                "secondary-container": "#316bf3",
+                "on-primary-container": "#7d96cd",
+                "background": "#f7f9fb",
+                "surface-dim": "#d8dadc",
+                "on-background": "#191c1e",
+                "text-primary": "#374151",
+                "on-surface-variant": "#44474f",
+                "tertiary-fixed-dim": "#8bd79b",
+                "on-primary-fixed": "#001a42",
+                "primary-container": "#0f2d5e",
+                "secondary-fixed-dim": "#b4c5ff",
+                "surface": "#f7f9fb",
+                "income-green": "#166534",
+                "on-error": "#ffffff",
+                "error": "#ba1a1a",
+                "on-tertiary-fixed": "#00210b",
+                "on-primary-fixed-variant": "#2c4678",
+                "on-error-container": "#93000a",
+                "warning-orange": "#9A3412",
+                "surface-tint": "#455e91",
+                "surface-container": "#eceef0",
+                "surface-container-highest": "#e0e3e5",
+                "inverse-primary": "#aec6ff",
+                "tertiary-container": "#003717",
+                "secondary": "#0051d5",
+                "expense-red": "#991B1B",
+                "on-secondary-container": "#fefcff",
+                "surface-container-lowest": "#ffffff",
+                "primary-fixed": "#d8e2ff",
+                "text-secondary": "#64748B",
+                "outline": "#747780",
+                "surface-variant": "#e0e3e5",
+                "on-primary": "#ffffff",
+                "on-tertiary": "#ffffff",
+                "surface-container-low": "#f2f4f6",
+                "inverse-surface": "#2d3133",
+                "primary-fixed-dim": "#aec6ff",
+                "on-secondary-fixed": "#00174b",
+                "surface-card": "#FFFFFF",
+                "surface-container-high": "#e6e8ea",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#5ba66d",
+                "surface-bright": "#f7f9fb",
+                "on-tertiary-fixed-variant": "#005226",
+                "tertiary-fixed": "#a6f4b5",
+                "tertiary": "#001f0a"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "0.5rem",
+                "stack-md": "1rem",
+                "edge-margin": "1rem",
+                "stack-lg": "1.5rem",
+                "gutter-md": "1rem"
+            },
+            "fontFamily": {
+                "headline-md": ["Inter"],
+                "label-md": ["Inter"],
+                "headline-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "body-md": ["Inter"],
+                "title-lg": ["Inter"],
+                "numeric-display": ["Inter"],
+                "label-lg": ["Inter"]
+            },
+            "fontSize": {
+                "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "numeric-display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow { box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .fab-active:active { transform: scale(0.9) rotate(5deg); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-primary dark:bg-primary-container text-on-primary shadow-sm flex items-center px-edge-margin h-16 w-full fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-primary">local_laundry_service</span>
+<h1 class="font-headline-md text-headline-md font-bold">Transaksi</h1>
+</div>
+<div class="ml-auto flex items-center gap-4">
+<button class="material-symbols-outlined p-2 hover:bg-primary-container/20 rounded-full transition-colors">search</button>
+<button class="material-symbols-outlined p-2 hover:bg-primary-container/20 rounded-full transition-colors">calendar_today</button>
+</div>
+</header>
+<main class="flex-grow pt-20 pb-24 px-edge-margin max-w-2xl mx-auto w-full">
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-stack-md">
+<button class="bg-secondary-container text-on-secondary-container px-6 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap transition-all ring-1 ring-inset ring-outline-variant/20">Semua</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-6 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-container-high transition-all">Pemasukan</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-6 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-container-high transition-all">Pengeluaran</button>
+</div>
+<!-- Section: Summary Card -->
+<section class="mb-stack-lg">
+<div class="bg-primary-container text-on-primary-container p-stack-md rounded-xl shadow-md flex justify-between items-center relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div>
+<p class="font-label-md text-label-md opacity-80 uppercase tracking-wider">Total Saldo</p>
+<p class="font-numeric-display text-numeric-display">Rp 4.250.000</p>
+</div>
+<div class="text-right">
+<div class="flex items-center text-income-green bg-white/90 px-2 py-0.5 rounded-md mb-1">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>
+<span class="font-label-md text-label-md font-bold">+12%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Transaction List Group: Hari Ini -->
+<section class="space-y-stack-md mb-stack-lg">
+<div class="flex justify-between items-center px-1">
+<h2 class="font-title-lg text-title-lg text-on-surface-variant">Hari Ini</h2>
+<p class="font-label-md text-label-md text-text-secondary">Selasa, 24 Okt</p>
+</div>
+<!-- Item 1: Income -->
+<div class="bg-surface-card rounded-xl p-stack-md soft-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group border border-transparent active:border-outline-variant">
+<div class="w-12 h-12 rounded-full bg-income-green/12 flex items-center justify-center text-income-green group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_basket</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-title-lg text-title-lg text-on-surface">Cuci Kering Lipat - 5kg</h3>
+<div class="flex items-center gap-2">
+<p class="font-label-md text-label-md text-text-secondary">Order #8821 • 09:45</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-income-green">+Rp 35.000</p>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/50">CASH</span>
+</div>
+</div>
+<!-- Item 2: Expense -->
+<div class="bg-surface-card rounded-xl p-stack-md soft-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group border border-transparent active:border-outline-variant">
+<div class="w-12 h-12 rounded-full bg-expense-red/12 flex items-center justify-center text-expense-red group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-title-lg text-title-lg text-on-surface">Tagihan Listrik Bulanan</h3>
+<p class="font-label-md text-label-md text-text-secondary">Operasional • 14:20</p>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-expense-red">-Rp 1.200.000</p>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/50">BANK</span>
+</div>
+</div>
+</section>
+<!-- Transaction List Group: Kemarin -->
+<section class="space-y-stack-md">
+<div class="flex justify-between items-center px-1">
+<h2 class="font-title-lg text-title-lg text-on-surface-variant">Kemarin</h2>
+<p class="font-label-md text-label-md text-text-secondary">Senin, 23 Okt</p>
+</div>
+<!-- Item 3: Income -->
+<div class="bg-surface-card rounded-xl p-stack-md soft-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-income-green/12 flex items-center justify-center text-income-green">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">iron</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-title-lg text-title-lg text-on-surface">Setrika Saja - 12kg</h3>
+<p class="font-label-md text-label-md text-text-secondary">Order #8819 • 16:30</p>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-income-green">+Rp 60.000</p>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/50">QRIS</span>
+</div>
+</div>
+<!-- Item 4: Expense -->
+<div class="bg-surface-card rounded-xl p-stack-md soft-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-expense-red/12 flex items-center justify-center text-expense-red">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">opacity</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-title-lg text-title-lg text-on-surface">Beli Deterjen &amp; Softener</h3>
+<p class="font-label-md text-label-md text-text-secondary">Stok • 11:15</p>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-expense-red">-Rp 450.000</p>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/50">CASH</span>
+</div>
+</div>
+<!-- Item 5: Income -->
+<div class="bg-surface-card rounded-xl p-stack-md soft-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-income-green/12 flex items-center justify-center text-income-green">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dry_cleaning</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-title-lg text-title-lg text-on-surface">Cuci Karpet (Besar)</h3>
+<p class="font-label-md text-label-md text-text-secondary">Order #8815 • 10:05</p>
+</div>
+<div class="text-right">
+<p class="font-title-lg text-title-lg text-income-green">+Rp 120.000</p>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant/50">CASH</span>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-edge-margin w-14 h-14 bg-primary text-on-primary rounded-xl shadow-xl flex items-center justify-center transition-all hover:scale-105 fab-active z-40 group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface dark:bg-inverse-surface border-t border-outline-variant/30 shadow-lg">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Beranda</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Order</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-5 py-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-md text-label-md">Transaksi</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Laporan</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.filter-chip').forEach(c => {
+                    c.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+                    c.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+                });
+                this.classList.add('bg-secondary-container', 'text-on-secondary-container');
+                this.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+            });
+        });
+
+        // Add visual feedback on card clicks
+        document.querySelectorAll('.bg-surface-card').forEach(card => {
+            card.addEventListener('mousedown', () => card.classList.add('scale-[0.98]'));
+            card.addEventListener('mouseup', () => card.classList.remove('scale-[0.98]'));
+            card.addEventListener('mouseleave', () => card.classList.remove('scale-[0.98]'));
+        });
+    </script>
+</body></html>

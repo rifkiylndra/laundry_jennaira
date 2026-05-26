@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Laundry Jennaira - Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "inverse-primary": "#aec6ff",
+                        "expense-red": "#991B1B",
+                        "on-secondary-fixed": "#00174b",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-fixed-variant": "#2c4678",
+                        "secondary": "#0051d5",
+                        "on-error": "#ffffff",
+                        "text-secondary": "#64748B",
+                        "surface-card": "#FFFFFF",
+                        "on-secondary-container": "#fefcff",
+                        "secondary-fixed": "#dbe1ff",
+                        "secondary-container": "#316bf3",
+                        "on-primary-container": "#7d96cd",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#001f0a",
+                        "tertiary-fixed-dim": "#8bd79b",
+                        "outline-variant": "#c4c6d0",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "income-green": "#166534",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "primary-container": "#0f2d5e",
+                        "tertiary-container": "#003717",
+                        "error-container": "#ffdad6",
+                        "primary": "#00183f",
+                        "on-background": "#191c1e",
+                        "on-surface-variant": "#44474f",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "on-primary-fixed": "#001a42",
+                        "on-error-container": "#93000a",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed": "#00210b",
+                        "on-tertiary-container": "#5ba66d",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary": "#ffffff",
+                        "warning-orange": "#9A3412",
+                        "surface-dim": "#d8dadc",
+                        "text-primary": "#374151",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "primary-fixed-dim": "#aec6ff",
+                        "on-primary": "#ffffff",
+                        "outline": "#747780",
+                        "tertiary-fixed": "#a6f4b5",
+                        "surface-variant": "#e0e3e5",
+                        "surface-tint": "#455e91",
+                        "surface-container-high": "#e6e8ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter-md": "1rem",
+                        "edge-margin": "1rem",
+                        "stack-sm": "0.5rem",
+                        "stack-md": "1rem",
+                        "stack-lg": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "numeric-display": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "numeric-display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .animate-spin-custom {
+            animation: spin-slow 1.5s linear infinite;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F2D5E; /* Enforced solid primary brand color */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center">
+<!-- Brand Identity Layout -->
+<main class="flex flex-col items-center justify-between h-full py-20 px-edge-margin w-full max-w-md mx-auto">
+<!-- Empty Top Spacer for Centering Balance -->
+<div class="h-10"></div>
+<!-- Central Content Area -->
+<section class="flex flex-col items-center justify-center space-y-6 fade-in-up">
+<!-- Logo Container -->
+<div class="w-48 h-48 md:w-56 md:h-56 relative flex items-center justify-center bg-white/5 rounded-full backdrop-blur-sm p-4">
+<img alt="Laundry Jennaira Logo" class="w-full h-full object-contain brightness-0 invert" src="https://lh3.googleusercontent.com/aida/ADBb0ugPXyIfD3_FMkjgAv-nzPzJ0T9MWU_BioAwZzsNdxdCg2CsOKIRIgihu6NBAXg9q81R5lSbsKrMDnyhT2QESss109a0OGK3HzBu9NBMYGLkxfOH3veXOj1nSjzdrAcKRG49MZt6zpFZb6QiBGlUN0h8JlZdIdXTohNCQXEaJuSTXG7HPHBW9HPmsUM92GDXah8n_eHaBmiDDtU7GDYbaNV8kC1DJilLrkKqMJ6ypZvzwMvfldGqJLepXMZR"/>
+</div>
+<!-- Branding Text -->
+<div class="text-center space-y-2">
+<h1 class="font-headline-lg text-headline-lg text-on-primary tracking-tight">
+                    Laundry Jennaira
+                </h1>
+<p class="font-label-lg text-label-lg text-on-primary/60 uppercase tracking-[0.2em]">
+                    Premium Service
+                </p>
+</div>
+</section>
+<!-- Bottom Content Area -->
+<section class="flex flex-col items-center space-y-8">
+<!-- Loading Indicator -->
+<div class="relative w-10 h-10">
+<!-- Static Outer Ring -->
+<div class="absolute inset-0 border-2 border-white/20 rounded-full"></div>
+<!-- Animated Progress -->
+<div class="absolute inset-0 border-2 border-t-white border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin-custom"></div>
+</div>
+<!-- Operational Status / Footer Tagline -->
+<div class="text-center">
+<span class="font-label-md text-label-md text-on-primary/40 block">
+                    © 2024 Jennaira Collective
+                </span>
+</div>
+</section>
+</main>
+<!-- Subtle Atmospheric Particles -->
+<canvas class="fixed inset-0 pointer-events-none opacity-20" id="particleCanvas"></canvas>
+<script>
+        // Micro-interaction: Smooth Particle Background
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 25;
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 1,
+                    speedY: Math.random() * 0.5 + 0.2,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.y -= p.speedY;
+                if (p.y < -10) p.y = canvas.height + 10;
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        init();
+        animate();
+
+        // Redirect logic placeholder (simulating splash duration)
+        setTimeout(() => {
+            console.log("Splash sequence complete. Ready for main destination.");
+        }, 3500);
+    </script>
+</body></html>
