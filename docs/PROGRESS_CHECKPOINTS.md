@@ -42,10 +42,10 @@
 
 ## 🟡 FASE 2: CORE ENGINE & PEMBAYARAN (Minggu 2 / H-8 s.d H-14)
 *Fokus: Algoritma harga dinamis dan alur transaksi pelanggan.*
-- [ ] **H-8: Model & Provider Order**
-  - [ ] Update `OrderModel` (tambah field `discount`, `is_paid`, `cust_address`).
-- [ ] **H-9: UI List Order**
-  - [ ] Slicing UI OrderListScreen (Tab: Aktif / Selesai / Belum Lunas).
+- [x] **H-8: Model & Provider Order**
+  - [x] Update `OrderModel` (tambah field `discount`, `is_paid`, `cust_address`).
+- [x] **H-9: UI List Order**
+  - [x] Slicing UI OrderListScreen (Tab: Aktif / Selesai / Belum Lunas).
 - [ ] **H-10: Form Buat Order (UI)**
   - [ ] Slicing Create Order BottomSheet.
   - [ ] Setup input dinamis (Dropdown Satuan, Radio durasi hari).
