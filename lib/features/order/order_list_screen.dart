@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:laundry_jennaira/app/theme.dart';
 import 'package:laundry_jennaira/features/auth/auth_provider.dart';
 import 'package:laundry_jennaira/features/order/order_provider.dart';
+import 'package:laundry_jennaira/features/order/widgets/create_order_bottomsheet.dart';
+import 'package:laundry_jennaira/features/order/order_detail_screen.dart';
 import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
 
@@ -156,8 +158,15 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // TODO: Buka BottomSheet Buat Order
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) => const CreateOrderBottomSheet(),
+            );
           },
+          backgroundColor: AppTheme.primaryColor,
+          foregroundColor: Colors.white,
           child: const Icon(Icons.add),
         ),
       ),
@@ -274,7 +283,12 @@ class _OrderCard extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                // TODO: Navigate to Order Detail
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrderDetailScreen(order: order),
+                  ),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

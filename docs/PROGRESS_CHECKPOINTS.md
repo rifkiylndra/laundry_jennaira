@@ -46,19 +46,19 @@
   - [x] Update `OrderModel` (tambah field `discount`, `is_paid`, `cust_address`).
 - [x] **H-9: UI List Order**
   - [x] Slicing UI OrderListScreen (Tab: Aktif / Selesai / Belum Lunas).
-- [ ] **H-10: Form Buat Order (UI)**
-  - [ ] Slicing Create Order BottomSheet.
-  - [ ] Setup input dinamis (Dropdown Satuan, Radio durasi hari).
-- [ ] **H-11: Pricing Engine (Logic)**
-  - [ ] Tanamkan logika minimum 1.5kg untuk Express.
-  - [ ] Tanamkan logika diskon 1kg (Layanan 1 hari > 5kg).
-- [ ] **H-12: Order Detail**
-  - [ ] Slicing UI Order Detail (Visual stepper status).
-- [ ] **H-13: Payment Modal**
-  - [ ] Buat UI Payment BottomSheet (Tunai/QRIS, input uang diterima).
-  - [ ] Logika update `is_paid` menjadi true.
-- [ ] **H-14: Testing W2**
-  - [ ] Test end-to-end pembuatan order dengan algoritma harga.
+- [x] **H-10: Form Buat Order (UI)**
+  - [x] Slicing Create Order BottomSheet.
+  - [x] Setup input dinamis (Dropdown Satuan, Radio durasi hari).
+- [x] **H-11: Pricing Engine (Logic)**
+  - [x] Tanamkan logika minimum 1.5kg untuk Express.
+  - [x] Tanamkan logika diskon 1kg (Layanan 1 hari > 5kg).
+- [x] **H-12: Order Detail**
+  - [x] Slicing UI Order Detail (Visual stepper status).
+- [x] **H-13: Payment Modal**
+  - [x] Buat UI Payment BottomSheet (Tunai/QRIS, input uang diterima).
+  - [x] Logika update `is_paid` menjadi true.
+- [x] **H-14: Testing W2**
+  - [x] Test end-to-end pembuatan order dengan algoritma harga.
 
 ---
 
