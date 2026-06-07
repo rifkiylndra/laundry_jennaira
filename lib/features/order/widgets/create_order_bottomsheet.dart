@@ -10,7 +10,14 @@ import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateOrderBottomSheet extends ConsumerStatefulWidget {
-  const CreateOrderBottomSheet({super.key});
+  final String? initialServiceType;
+  final String? initialDuration;
+
+  const CreateOrderBottomSheet({
+    super.key,
+    this.initialServiceType,
+    this.initialDuration,
+  });
 
   @override
   ConsumerState<CreateOrderBottomSheet> createState() => _CreateOrderBottomSheetState();
@@ -24,7 +31,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
   final _weightController = TextEditingController();
   final _qtyController = TextEditingController();
 
-  String _serviceType = 'Kiloan'; // Kiloan, Satuan
+  String _serviceType = 'Cuci Gosok'; // Cuci Kering, Cuci Gosok, Satuan
   String _duration = '3 Hari'; // 3 Hari, 2 Hari, 1 Hari, Express (6-8 Jam)
   String _selectedItem = 'Sprei'; // Sprei, Selimut, Sepatu, Boneka, Karpet
 
@@ -36,6 +43,12 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
   @override
   void initState() {
     super.initState();
+    if (widget.initialServiceType != null) {
+      _serviceType = widget.initialServiceType!;
+    }
+    if (widget.initialDuration != null) {
+      _duration = widget.initialDuration!;
+    }
     // Add listeners to text controllers to recalculate price on typing
     _weightController.addListener(_calculateEstimasi);
     _qtyController.addListener(_calculateEstimasi);
@@ -75,7 +88,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
     if (_formKey.currentState!.validate()) {
       double weight = double.tryParse(_weightController.text.replaceAll(',', '.')) ?? 0.0;
       int durationVal = 3;
-      if (_serviceType == 'Kiloan') {
+      if (_serviceType == 'Cuci Kering' || _serviceType == 'Cuci Gosok') {
         if (_duration == '3 Hari') durationVal = 3;
         else if (_duration == '2 Hari') durationVal = 2;
         else if (_duration == '1 Hari') durationVal = 1;
@@ -91,7 +104,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
         custPhone: _phoneController.text,
         custAddress: _addressController.text,
         weightKg: weight,
-        service: _serviceType == 'Kiloan' ? 'Cuci Gosok' : 'Satuan - $_selectedItem',
+        service: _serviceType == 'Satuan' ? 'Satuan - $_selectedItem' : _serviceType,
         duration: durationVal,
         status: 'diterima',
         price: _totalPrice,
@@ -286,9 +299,15 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
                     Wrap(
                       spacing: 8,
                       children: [
-                        _buildChoiceChip('Kiloan', _serviceType == 'Kiloan', () {
+                        _buildChoiceChip('Cuci Gosok', _serviceType == 'Cuci Gosok', () {
                           setState(() {
-                            _serviceType = 'Kiloan';
+                            _serviceType = 'Cuci Gosok';
+                            _calculateEstimasi();
+                          });
+                        }),
+                        _buildChoiceChip('Cuci Kering', _serviceType == 'Cuci Kering', () {
+                          setState(() {
+                            _serviceType = 'Cuci Kering';
                             _calculateEstimasi();
                           });
                         }),
@@ -302,7 +321,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
                     ),
                     const SizedBox(height: 16),
 
-                    if (_serviceType == 'Kiloan') ...[
+                    if (_serviceType == 'Cuci Kering' || _serviceType == 'Cuci Gosok') ...[
                       _buildTextField(
                         controller: _weightController,
                         label: 'Berat (kg)',

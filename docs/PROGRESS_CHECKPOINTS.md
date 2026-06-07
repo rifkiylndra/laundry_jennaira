@@ -64,18 +64,18 @@
 
 ## 🟠 FASE 3: KEUANGAN & DASHBOARD ADMIN (Minggu 3 / H-15 s.d H-21)
 *Fokus: Fitur eksklusif Owner untuk memantau arus kas.*
-- [ ] **H-15: Transaksi Harian**
-  - [ ] UI & Logic List Transaksi (Pemasukan/Pengeluaran).
-- [ ] **H-16: Tambah Pengeluaran**
-  - [ ] UI & Logic Add Transaksi BottomSheet.
-- [ ] **H-17 & H-18: Dashboard Analytics**
-  - [ ] Provider hitung omzet & profit hari ini.
-  - [ ] Slicing UI Dashboard (Hero cards & Bar Chart).
-- [ ] **H-19 & H-20: Laporan & Settings**
-  - [ ] UI Laporan Bulanan & Export.
-  - [ ] Slicing UI Settings & Inventory stok dasar.
-- [ ] **H-21: Testing W3**
-  - [ ] Pastikan Kasir sama sekali tidak bisa mengakses halaman W3.
+- [x] **H-15: Transaksi Harian**
+  - [x] UI & Logic List Transaksi (Pemasukan/Pengeluaran).
+- [x] **H-16: Tambah Pengeluaran**
+  - [x] UI & Logic Add Transaksi BottomSheet.
+- [x] **H-17 & H-18: Dashboard Analytics**
+  - [x] Provider hitung omzet & profit hari ini.
+  - [x] Slicing UI Dashboard (Hero cards & Bar Chart).
+- [x] **H-19 & H-20: Laporan & Settings**
+  - [x] UI Laporan Bulanan & Export.
+  - [x] Slicing UI Settings & Inventory stok dasar.
+- [x] **H-21: Testing W3**
+  - [x] Pastikan Kasir sama sekali tidak bisa mengakses halaman W3.
 
 ---
 

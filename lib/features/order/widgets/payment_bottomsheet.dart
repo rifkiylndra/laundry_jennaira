@@ -6,6 +6,9 @@ import 'package:laundry_jennaira/app/theme.dart';
 import 'package:laundry_jennaira/features/order/order_provider.dart';
 import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
+import 'package:laundry_jennaira/features/transaction/transaction_provider.dart';
+import 'package:laundry_jennaira/shared/models/transaction_model.dart';
+import 'package:uuid/uuid.dart';
 
 class PaymentBottomSheet extends ConsumerStatefulWidget {
   final OrderModel order;
@@ -67,7 +70,20 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
         isPaid: true,
         status: 'selesai',
       );
-      await ref.read(orderNotifierProvider.notifier).updateOrder(updatedOrder);
+      
+      final transaction = TransactionModel(
+        id: const Uuid().v4(),
+        orderId: widget.order.id,
+        amount: _finalPrice,
+        type: 'income',
+        description: 'Pembayaran Pesanan ${widget.order.custName ?? widget.order.orderNo}',
+        createdAt: DateTime.now(),
+      );
+
+      await Future.wait([
+        ref.read(orderNotifierProvider.notifier).updateOrder(updatedOrder),
+        ref.read(transactionNotifierProvider.notifier).addTransaction(transaction),
+      ]);
 
       if (mounted) {
         Navigator.pop(context); // Close BottomSheet

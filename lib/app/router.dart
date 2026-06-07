@@ -11,8 +11,8 @@ import 'package:laundry_jennaira/features/auth/splash_screen.dart';
 import 'package:laundry_jennaira/features/dashboard/dashboard_screen.dart';
 import 'package:laundry_jennaira/features/order/order_list_screen.dart';
 import 'package:laundry_jennaira/features/transaction/transaction_list_screen.dart';
-import 'package:laundry_jennaira/features/report/report_screen.dart';
-import 'package:laundry_jennaira/features/settings/settings_screen.dart';
+import 'package:laundry_jennaira/features/report/screens/monthly_report_screen.dart';
+import 'package:laundry_jennaira/features/settings/screens/settings_screen.dart';
 import 'package:laundry_jennaira/features/main/main_navigation_screen.dart';
 
 part 'router.g.dart';
@@ -105,7 +105,7 @@ GoRouter router(Ref ref) {
           ),
           GoRoute(
             path: '/reports',
-            builder: (context, state) => const ReportScreen(),
+            builder: (context, state) => const MonthlyReportScreen(),
           ),
           GoRoute(
             path: '/settings',
