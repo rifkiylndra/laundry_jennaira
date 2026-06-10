@@ -79,21 +79,35 @@
 
 ---
 
-## 🟣 FASE 4: POLISHING, OFFLINE & RELEASE (Minggu 4 / H-22 s.d H-28)
-*Fokus: Error handling, fitur pendukung, dan serah terima ke klien.*
-- [ ] **H-22: Offline Handling**
-  - [ ] Wrap semua Supabase queries dengan Try-Catch.
-  - [ ] Tampilkan Red SnackBar "Koneksi Terputus" jika gagal `insert/update`.
-- [ ] **H-23: WhatsApp Receipt**
-  - [ ] Integrasi `url_launcher`.
-  - [ ] Buat format teks nota digital untuk dikirim ke WA.
-- [ ] **H-24 & H-25: UI/UX Polish**
-  - [ ] Empty states untuk list kosong.
-  - [ ] Loading indicators & validasi form.
-- [ ] **H-26 & H-27: UAT (User Acceptance Testing)**
-  - [ ] Build APK Release.
-  - [ ] Sesi testing langsung bersama Mas Zamzami di toko.
-  - [ ] Fix bug minor temuan UAT.
+## 🟣 FASE 4: BUG FIXES, OPERATIONAL FEATURES & RELEASE (Minggu 4 / H-22 s.d H-28)
+*Fokus: Penyelesaian bug UAT, penambahan fitur operasional (QRIS & Tutup Buku), integrasi perangkat keras, dan serah terima.*
+
+- [x] **H-22: Logic Fixes & Dynamic UI (Menjawab Temuan UAT)**
+  - [x] Laporan: Aktifkan fungsionalitas Tab Harian.
+  - [x] Laporan: Buat *Custom Date Picker* khusus untuk pemilihan Bulan dan Tahun pada Tab Bulanan.
+  - [x] Order: Buat logika *Stepper* dinamis berdasarkan layanan (Cuci Gosok = 4 langkah, Cuci Kering = 3 langkah, Satuan = 3 langkah).
+
+- [ ] **H-23: Fitur Operasional (Settings & End of Day)**
+  - [ ] Settings: Buat halaman **Atur QRIS** (Fungsi *upload* foto QRIS statis ke Supabase Storage dan menampilkannya di aplikasi).
+  - [ ] Payment Modal: Tampilkan foto QRIS tersebut secara otomatis di `PaymentBottomSheet` jika kasir memilih metode QRIS.
+  - [ ] Settings: Buat halaman **Tutup Buku Harian** (Rekapitulasi otomatis total Pemasukan Tunai vs QRIS dan Pengeluaran hari ini).
+
+- [ ] **H-24: Output, Sharing & Hardware (Cetak & Ekspor)**
+  - [ ] Integrasi package `print_bluetooth_thermal` untuk mencetak format struk belanja via printer kasir.
+  - [ ] Integrasi package `url_launcher` untuk mengirim nota digital pelanggan dan laporan Tutup Buku ke WhatsApp.
+  - [ ] Integrasi package `path_provider` untuk fitur *download* Laporan Bulanan (PDF/CSV) ke penyimpanan internal HP.
+
+- [ ] **H-25: UI/UX Polish & Offline Handling**
+  - [ ] Database: *Wrap* seluruh operasi Supabase dengan `Try-Catch`.
+  - [ ] UI: Tampilkan Red SnackBar "Koneksi Terputus" jika gagal *insert/update*.
+  - [ ] UI: Buat *Empty States* (ilustrasi/teks indikator) jika daftar Pesanan atau Transaksi kosong.
+
+- [ ] **H-26 & H-27: UAT (User Acceptance Testing) & Final Build**
+  - [ ] Build: Generate APK Release versi stabil terbaru.
+  - [ ] Testing: Sesi uji coba langsung (Cetak struk, Tutup Buku, dan scan QRIS) bersama Mas Zamzami di toko.
+  - [ ] Bug Fixes: Perbaikan kilat untuk temuan minor.
+
 - [ ] **H-28: Go Live! 🎉**
-  - [ ] Deploy database production.
-  - [ ] Serah terima ke Mas Zamzami.
+  - [ ] Database: Deploy dan bersihkan data *testing* menjadi *Production*.
+  - [ ] Handover: Serah terima sistem POS Laundry Jennaira secara resmi.
+  

@@ -13,28 +13,31 @@ class OrderDetailScreen extends ConsumerWidget {
 
   const OrderDetailScreen({super.key, required this.order});
 
-  // Maps db status to integer steps for the stepper
-  int _getCurrentStepIndex(String status) {
-    switch (status.toLowerCase()) {
-      case 'diterima':
-        return 0; // Antrean
-      case 'dicuci':
-        return 1; // Dicuci
-      case 'setrika':
-        return 2; // Setrika
-      case 'siap_diambil':
-      case 'siap diambil':
-        return 3; // Siap Diambil
-      case 'selesai':
-        return 4; // Selesai
-      default:
-        return 0;
+  int _getCurrentStepIndex(String status, String serviceType) {
+    status = status.toLowerCase();
+    serviceType = serviceType.toLowerCase();
+
+    if (status == 'diterima') return 0;
+    if (status == 'selesai') return 99;
+
+    if (serviceType == 'cuci kering') {
+      if (status == 'dicuci') return 1;
+      if (status.contains('siap')) return 2;
+    } else if (serviceType == 'satuan') {
+      if (status == 'diproses' || status == 'dicuci' || status == 'setrika' || status == 'processing') return 1;
+      if (status.contains('siap')) return 2;
+    } else {
+      // Cuci Gosok & Default
+      if (status == 'dicuci') return 1;
+      if (status == 'setrika') return 2;
+      if (status.contains('siap')) return 3;
     }
+    return 0;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int currentStep = _getCurrentStepIndex(order.status);
+    final int currentStep = _getCurrentStepIndex(order.status, order.service);
     final int finalPrice = (order.price - order.discount).clamp(0, double.infinity).toInt();
 
     return Scaffold(
@@ -299,6 +302,30 @@ class OrderDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildStatusCard(int currentStep) {
+    final String serviceType = order.service.toLowerCase();
+    
+    List<Map<String, dynamic>> steps;
+    if (serviceType == 'cuci kering') {
+      steps = [
+        {'title': 'Antrean', 'subtitle': 'Pesanan telah diterima kasir', 'icon': Icons.check_circle},
+        {'title': 'Dicuci', 'subtitle': 'Sedang dalam proses pencucian', 'icon': Icons.local_laundry_service},
+        {'title': 'Siap Diambil', 'subtitle': 'Menunggu diambil oleh pelanggan', 'icon': Icons.inventory_2},
+      ];
+    } else if (serviceType == 'satuan') {
+      steps = [
+        {'title': 'Antrean', 'subtitle': 'Pesanan telah diterima kasir', 'icon': Icons.check_circle},
+        {'title': 'Diproses', 'subtitle': 'Sedang diproses', 'icon': Icons.cleaning_services},
+        {'title': 'Siap Diambil', 'subtitle': 'Menunggu diambil oleh pelanggan', 'icon': Icons.inventory_2},
+      ];
+    } else {
+      steps = [
+        {'title': 'Antrean', 'subtitle': 'Pesanan telah diterima kasir', 'icon': Icons.check_circle},
+        {'title': 'Dicuci', 'subtitle': 'Sedang dalam proses pencucian', 'icon': Icons.local_laundry_service},
+        {'title': 'Setrika', 'subtitle': 'Sedang disetrika dan dirapikan', 'icon': Icons.iron},
+        {'title': 'Siap Diambil', 'subtitle': 'Menunggu diambil oleh pelanggan', 'icon': Icons.inventory_2},
+      ];
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -325,41 +352,15 @@ class OrderDetailScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 24),
-          _buildTimelineStep(
-            title: 'Antrean',
-            subtitle: 'Pesanan telah diterima kasir',
-            icon: Icons.check_circle,
-            isActive: currentStep >= 0,
-            isLast: false,
-          ),
-          _buildTimelineStep(
-            title: 'Dicuci',
-            subtitle: 'Sedang dalam proses pencucian',
-            icon: Icons.local_laundry_service,
-            isActive: currentStep >= 1,
-            isLast: false,
-          ),
-          _buildTimelineStep(
-            title: 'Setrika',
-            subtitle: 'Sedang disetrika dan dirapikan',
-            icon: Icons.iron,
-            isActive: currentStep >= 2,
-            isLast: false,
-          ),
-          _buildTimelineStep(
-            title: 'Siap Diambil',
-            subtitle: 'Menunggu diambil oleh pelanggan',
-            icon: Icons.inventory_2,
-            isActive: currentStep >= 3,
-            isLast: false,
-          ),
-          _buildTimelineStep(
-            title: 'Selesai',
-            subtitle: 'Laundry telah diserahkan',
-            icon: Icons.task_alt,
-            isActive: currentStep >= 4,
-            isLast: true,
-          ),
+          ...List.generate(steps.length, (index) {
+            return _buildTimelineStep(
+              title: steps[index]['title'],
+              subtitle: steps[index]['subtitle'],
+              icon: steps[index]['icon'],
+              isActive: currentStep >= index,
+              isLast: index == steps.length - 1,
+            );
+          }),
         ],
       ),
     );
@@ -533,12 +534,23 @@ class OrderDetailScreen extends ConsumerWidget {
                 String nextVal = '';
                 switch (order.status.toLowerCase()) {
                   case 'diterima':
-                    nextLabel = 'Update ke Dicuci';
-                    nextVal = 'dicuci';
+                    if (order.service.toLowerCase() == 'satuan') {
+                      nextLabel = 'Update ke Diproses';
+                      nextVal = 'diproses';
+                    } else {
+                      nextLabel = 'Update ke Dicuci';
+                      nextVal = 'dicuci';
+                    }
                     break;
                   case 'dicuci':
-                    nextLabel = 'Update ke Setrika';
-                    nextVal = 'setrika';
+                  case 'diproses':
+                    if (order.service.toLowerCase() == 'cuci kering' || order.service.toLowerCase() == 'satuan') {
+                      nextLabel = 'Update ke Siap Diambil';
+                      nextVal = 'siap_diambil';
+                    } else {
+                      nextLabel = 'Update ke Setrika';
+                      nextVal = 'setrika';
+                    }
                     break;
                   case 'setrika':
                     nextLabel = 'Update ke Siap Diambil';

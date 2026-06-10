@@ -51,4 +51,20 @@ class TransactionNotifier extends _$TransactionNotifier {
       throw Exception('Gagal menyimpan transaksi: $e');
     }
   }
+
+  List<TransactionModel> getTransactionsByDate(DateTime date) {
+    final currentState = state.value ?? [];
+    return currentState.where((t) {
+      final local = t.createdAt.toLocal();
+      return local.year == date.year && local.month == date.month && local.day == date.day;
+    }).toList();
+  }
+
+  List<TransactionModel> getTransactionsByMonth(DateTime monthYear) {
+    final currentState = state.value ?? [];
+    return currentState.where((t) {
+      final local = t.createdAt.toLocal();
+      return local.year == monthYear.year && local.month == monthYear.month;
+    }).toList();
+  }
 }
