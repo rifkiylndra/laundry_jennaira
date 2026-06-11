@@ -23,7 +23,7 @@ class TransactionNotifier extends _$TransactionNotifier {
       return (response as List).map((json) => TransactionModel.fromJson(json)).toList();
     } catch (e) {
       // Offline resilience handled by try-catch
-      throw Exception('Gagal mengambil data transaksi: $e');
+      throw Exception('Koneksi Terputus. Gagal mengambil data transaksi.');
     }
   }
 
@@ -48,7 +48,7 @@ class TransactionNotifier extends _$TransactionNotifier {
       // Refresh the list after successful insertion
       await refresh();
     } catch (e) {
-      throw Exception('Gagal menyimpan transaksi: $e');
+      throw Exception('Koneksi Terputus. Gagal menyimpan data.');
     }
   }
 

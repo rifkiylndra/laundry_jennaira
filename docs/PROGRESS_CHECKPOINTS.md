@@ -89,6 +89,7 @@
 
 - [x] **H-23: Fitur Operasional (Settings & End of Day)**
   - [x] Settings: Buat halaman **Atur QRIS** (Fungsi *upload* foto QRIS statis ke Supabase Storage dan menampilkannya di aplikasi).
+  - [x] Settings: Buat halaman **Info Usaha** (Edit dinamis Nama Usaha, Alamat, Nomor WA, dan Footer struk).
   - [x] Payment Modal: Tampilkan foto QRIS tersebut secara otomatis di `PaymentBottomSheet` jika kasir memilih metode QRIS.
   - [x] Settings: Buat halaman **Tutup Buku Harian** (Rekapitulasi otomatis total Pemasukan Tunai vs QRIS dan Pengeluaran hari ini).
 
@@ -97,10 +98,10 @@
   - [x] Integrasi package `url_launcher` untuk mengirim nota digital pelanggan dan laporan Tutup Buku ke WhatsApp.
   - [x] Integrasi package `path_provider` untuk fitur *download* Laporan Bulanan (PDF/CSV) ke penyimpanan internal HP.
 
-- [ ] **H-25: UI/UX Polish & Offline Handling**
-  - [ ] Database: *Wrap* seluruh operasi Supabase dengan `Try-Catch`.
-  - [ ] UI: Tampilkan Red SnackBar "Koneksi Terputus" jika gagal *insert/update*.
-  - [ ] UI: Buat *Empty States* (ilustrasi/teks indikator) jika daftar Pesanan atau Transaksi kosong.
+- [x] **H-25: UI/UX Polish & Offline Handling**
+  - [x] Database: *Wrap* seluruh operasi Supabase dengan `Try-Catch`.
+  - [x] UI: Tampilkan Red SnackBar "Koneksi Terputus" jika gagal *insert/update*.
+  - [x] UI: Buat *Empty States* (ilustrasi/teks indikator) jika daftar Pesanan atau Transaksi kosong.
 
 - [ ] **H-26 & H-27: UAT (User Acceptance Testing) & Final Build**
   - [ ] Build: Generate APK Release versi stabil terbaru.

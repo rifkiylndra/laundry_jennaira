@@ -2,6 +2,7 @@ import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PrinterHelper {
   static Future<bool> isConnected() async {
@@ -22,9 +23,14 @@ class PrinterHelper {
     final generator = Generator(PaperSize.mm58, profile);
     List<int> bytes = [];
 
+    final prefs = await SharedPreferences.getInstance();
+    final shopName = prefs.getString('business_name') ?? 'LAUNDRY JENNAIRA';
+    final shopAddress = prefs.getString('business_address') ?? 'Jl. Contoh Alamat No. 123';
+    final shopFooter = prefs.getString('business_footer') ?? 'Terima kasih!';
+
     // Header
     bytes.addAll(generator.text(
-      'LAUNDRY JENNAIRA',
+      shopName,
       styles: const PosStyles(
         align: PosAlign.center,
         height: PosTextSize.size2,
@@ -33,7 +39,7 @@ class PrinterHelper {
       ),
     ));
     bytes.addAll(generator.text(
-      'Jl. Contoh Alamat No. 123',
+      shopAddress,
       styles: const PosStyles(align: PosAlign.center),
     ));
     bytes.addAll(generator.feed(1));
@@ -96,7 +102,7 @@ class PrinterHelper {
 
     // Footer
     bytes.addAll(generator.text(
-      'Terima kasih!',
+      shopFooter,
       styles: const PosStyles(align: PosAlign.center),
     ));
     bytes.addAll(generator.feed(3));

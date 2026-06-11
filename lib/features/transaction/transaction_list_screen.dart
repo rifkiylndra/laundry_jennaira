@@ -236,15 +236,37 @@ class _TransactionListScreenState extends ConsumerState<TransactionListScreen> {
 
                 // Transaction Groups
                 if (filteredTransactions.isEmpty)
-                  const Center(
+                  Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: Text(
-                        'Belum ada transaksi.',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          color: AppTheme.textSecondaryColor,
-                        ),
+                      padding: const EdgeInsets.only(top: 80),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.receipt_long_rounded,
+                            size: 80,
+                            color: Colors.grey.shade400,
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Belum Ada Data',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Daftar transaksi saat ini masih kosong.',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   )

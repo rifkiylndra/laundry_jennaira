@@ -20,7 +20,7 @@ class OrderNotifier extends _$OrderNotifier {
       
       return (response as List).map((json) => OrderModel.fromJson(json)).toList();
     } catch (e) {
-      throw Exception('Gagal memuat pesanan: $e');
+      throw Exception('Koneksi Terputus. Gagal memuat pesanan.');
     }
   }
 
@@ -37,8 +37,8 @@ class OrderNotifier extends _$OrderNotifier {
       // Refresh the list
       state = AsyncValue.data(await _fetchOrders());
     } catch (e) {
-      state = AsyncError(e, StackTrace.current);
-      throw Exception('Koneksi Terputus. Data gagal disimpan.');
+      state = AsyncValue.data(state.value ?? []);
+      throw Exception('Koneksi Terputus. Gagal menyimpan data.');
     }
   }
 
@@ -50,8 +50,8 @@ class OrderNotifier extends _$OrderNotifier {
       // Refresh the list
       state = AsyncValue.data(await _fetchOrders());
     } catch (e) {
-      state = AsyncError(e, StackTrace.current);
-      throw Exception('Koneksi Terputus. Data gagal diperbarui.');
+      state = AsyncValue.data(state.value ?? []);
+      throw Exception('Koneksi Terputus. Gagal menyimpan data.');
     }
   }
 }

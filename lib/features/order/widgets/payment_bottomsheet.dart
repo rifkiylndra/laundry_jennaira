@@ -100,7 +100,10 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.toString()),
+            content: Text(
+              e.toString().replaceAll('Exception: ', ''),
+              style: const TextStyle(color: Colors.white),
+            ),
             backgroundColor: AppTheme.expenseColor,
           ),
         );
@@ -117,11 +120,12 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     final int change = _amountReceived - _finalPrice;
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppTheme.backgroundColor,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+    return SingleChildScrollView(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: AppTheme.backgroundColor,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
       padding: EdgeInsets.only(
         top: 12,
         left: 24,
@@ -314,7 +318,7 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
             )
           else
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -334,7 +338,8 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
                   const SizedBox(height: 16),
                   Image.network(
                     supabase.storage.from('settings').getPublicUrl('qris/active_qris.png'),
-                    height: 200,
+                    height: 400,
+                    width: double.infinity,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) => const Column(
                       children: [
@@ -392,6 +397,6 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

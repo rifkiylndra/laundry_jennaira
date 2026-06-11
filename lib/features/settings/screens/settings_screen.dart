@@ -6,6 +6,7 @@ import 'package:laundry_jennaira/app/theme.dart';
 import 'package:laundry_jennaira/features/inventory/screens/inventory_screen.dart';
 import 'package:laundry_jennaira/features/settings/screens/qris_settings_screen.dart';
 import 'package:laundry_jennaira/features/settings/screens/end_of_day_screen.dart';
+import 'package:laundry_jennaira/features/settings/screens/business_info_screen.dart';
 import 'package:laundry_jennaira/features/auth/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 
@@ -133,7 +134,9 @@ class SettingsScreen extends ConsumerWidget {
                   _buildSettingTile(
                     icon: Icons.storefront,
                     title: 'Info Usaha',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const BusinessInfoScreen()));
+                    },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
                   _buildSettingTile(

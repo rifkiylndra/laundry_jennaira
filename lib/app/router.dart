@@ -28,7 +28,7 @@ class RouterNotifier extends ChangeNotifier {
 }
 
 @riverpod
-GoRouter router(Ref ref) {
+GoRouter router(RouterRef ref) {
   final notifier = RouterNotifier(ref);
 
   return GoRouter(

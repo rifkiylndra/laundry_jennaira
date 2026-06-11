@@ -1,31 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction_provider.dart';
+part of 'business_info_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$transactionNotifierHash() =>
-    r'05bb9df800dc1627e3224f7590c96de22face278';
+String _$businessInfoNotifierHash() =>
+    r'127d654621c27f7694fdfb76312eed7ac307b910';
 
-/// See also [TransactionNotifier].
-@ProviderFor(TransactionNotifier)
-final transactionNotifierProvider =
+/// See also [BusinessInfoNotifier].
+@ProviderFor(BusinessInfoNotifier)
+final businessInfoNotifierProvider =
     AutoDisposeAsyncNotifierProvider<
-      TransactionNotifier,
-      List<TransactionModel>
+      BusinessInfoNotifier,
+      BusinessInfo
     >.internal(
-      TransactionNotifier.new,
-      name: r'transactionNotifierProvider',
+      BusinessInfoNotifier.new,
+      name: r'businessInfoNotifierProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$transactionNotifierHash,
+          : _$businessInfoNotifierHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$TransactionNotifier =
-    AutoDisposeAsyncNotifier<List<TransactionModel>>;
+typedef _$BusinessInfoNotifier = AutoDisposeAsyncNotifier<BusinessInfo>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

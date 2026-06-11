@@ -92,7 +92,10 @@ class _AddExpenseBottomSheetState extends ConsumerState<AddExpenseBottomSheet> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(
+          message.replaceAll('Exception: ', ''),
+          style: const TextStyle(color: Colors.white),
+        ),
         backgroundColor: AppTheme.expenseColor,
       ),
     );

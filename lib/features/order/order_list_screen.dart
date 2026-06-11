@@ -180,17 +180,27 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.inventory_2_outlined,
-              size: 64,
-              color: AppTheme.textSecondaryColor.withValues(alpha: 0.5),
+              Icons.receipt_long_rounded,
+              size: 80,
+              color: Colors.grey.shade400,
             ),
             const SizedBox(height: 16),
             const Text(
-              'Tidak ada pesanan',
+              'Belum Ada Data',
               style: TextStyle(
                 fontFamily: 'Inter',
-                fontSize: 16,
-                color: AppTheme.textSecondaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Daftar pesanan saat ini masih kosong.',
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 14,
+                color: Colors.grey,
               ),
             ),
           ],

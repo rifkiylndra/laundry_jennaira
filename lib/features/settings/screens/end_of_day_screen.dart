@@ -14,7 +14,9 @@ class EndOfDayScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // We assume transactionNotifierProvider is already loaded/watched elsewhere or we just watch it
     ref.watch(transactionNotifierProvider);
-    final summary = ref.read(transactionNotifierProvider.notifier).getEndOfDaySummary();
+    final summary = ref
+        .read(transactionNotifierProvider.notifier)
+        .getEndOfDaySummary();
 
     final int totalCash = summary['totalCash'] ?? 0;
     final int totalQris = summary['totalQris'] ?? 0;
@@ -25,7 +27,10 @@ class EndOfDayScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
       appBar: AppBar(
-        title: const Text('Tutup Buku Harian', style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Tutup Buku Harian',
+          style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.bold),
+        ),
         backgroundColor: AppTheme.primaryColor,
         foregroundColor: Colors.white,
       ),
@@ -34,7 +39,11 @@ class EndOfDayScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Icon(Icons.receipt_long, size: 64, color: AppTheme.primaryColor),
+            const Icon(
+              Icons.receipt_long,
+              size: 64,
+              color: AppTheme.primaryColor,
+            ),
             const SizedBox(height: 16),
             const Text(
               'Rekapitulasi Hari Ini',
@@ -76,21 +85,44 @@ class EndOfDayScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _buildSummaryRow('Pemasukan Tunai', totalCash, AppTheme.textPrimaryColor),
+                  _buildSummaryRow(
+                    'Pemasukan Tunai',
+                    totalCash,
+                    AppTheme.textPrimaryColor,
+                  ),
                   const SizedBox(height: 12),
-                  _buildSummaryRow('Pemasukan QRIS', totalQris, AppTheme.textPrimaryColor),
+                  _buildSummaryRow(
+                    'Pemasukan QRIS',
+                    totalQris,
+                    AppTheme.textPrimaryColor,
+                  ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Divider(color: Color(0xFFCBD5E1)),
                   ),
-                  _buildSummaryRow('Total Pemasukan', totalIncome, AppTheme.incomeColor, isBold: true),
+                  _buildSummaryRow(
+                    'Total Pemasukan',
+                    totalIncome,
+                    AppTheme.incomeColor,
+                    isBold: true,
+                  ),
                   const SizedBox(height: 16),
-                  _buildSummaryRow('Pengeluaran', totalExpense, AppTheme.expenseColor),
+                  _buildSummaryRow(
+                    'Pengeluaran',
+                    totalExpense,
+                    AppTheme.expenseColor,
+                  ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Divider(color: Color(0xFFCBD5E1)),
                   ),
-                  _buildSummaryRow('Total Laba Bersih', netProfit, AppTheme.accentColor, isBold: true, isLarge: true),
+                  _buildSummaryRow(
+                    'Total Laba Bersih',
+                    netProfit,
+                    AppTheme.accentColor,
+                    isBold: true,
+                    isLarge: true,
+                  ),
                 ],
               ),
             ),
@@ -105,7 +137,7 @@ class EndOfDayScreen extends ConsumerWidget {
             child: FilledButton.icon(
               onPressed: () async {
                 // We use a dummy owner number here for demonstration.
-                final ownerPhone = '081234567890';
+                final ownerPhone = '082392240627';
                 try {
                   await WaHelper.sendEndOfDayReport(ownerPhone, summary);
                   if (context.mounted) {
@@ -120,7 +152,10 @@ class EndOfDayScreen extends ConsumerWidget {
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(e.toString()), backgroundColor: AppTheme.expenseColor),
+                      SnackBar(
+                        content: Text(e.toString()),
+                        backgroundColor: AppTheme.expenseColor,
+                      ),
                     );
                   }
                 }
@@ -147,7 +182,13 @@ class EndOfDayScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSummaryRow(String label, int amount, Color amountColor, {bool isBold = false, bool isLarge = false}) {
+  Widget _buildSummaryRow(
+    String label,
+    int amount,
+    Color amountColor, {
+    bool isBold = false,
+    bool isLarge = false,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

@@ -1,6 +1,7 @@
 import 'package:url_launcher/url_launcher.dart';
 import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WaHelper {
   static Future<void> sendCustomerReceipt(String phone, OrderModel order) async {
@@ -18,8 +19,12 @@ class WaHelper {
 
     final finalPrice = (order.price - order.discount).clamp(0, double.infinity).toInt();
 
+    final prefs = await SharedPreferences.getInstance();
+    final shopName = prefs.getString('business_name') ?? 'Laundry Jennaira';
+    final shopFooter = prefs.getString('business_footer') ?? 'Terima kasih!';
+
     final message = '''
-Halo, terima kasih telah menggunakan layanan Laundry Jennaira!
+Halo, terima kasih telah menggunakan layanan $shopName!
 
 Berikut adalah rincian pesanan Anda:
 *Order ID:* ${order.orderNo}
@@ -27,7 +32,7 @@ Berikut adalah rincian pesanan Anda:
 *Total:* ${formatRupiah(finalPrice)}
 *Status:* ${order.status}
 
-Simpan pesan ini sebagai bukti pengambilan. Terima kasih!
+Simpan pesan ini sebagai bukti pengambilan. $shopFooter
 ''';
 
     final encodedMessage = Uri.encodeComponent(message);
