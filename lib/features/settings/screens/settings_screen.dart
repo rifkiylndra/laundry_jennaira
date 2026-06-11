@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:laundry_jennaira/app/theme.dart';
 import 'package:laundry_jennaira/features/inventory/screens/inventory_screen.dart';
+import 'package:laundry_jennaira/features/settings/screens/qris_settings_screen.dart';
+import 'package:laundry_jennaira/features/settings/screens/end_of_day_screen.dart';
 import 'package:laundry_jennaira/features/auth/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 
@@ -122,12 +124,12 @@ class SettingsScreen extends ConsumerWidget {
               ),
               child: Column(
                 children: [
-                  _buildSettingTile(
+                  /*_buildSettingTile(
                     icon: Icons.payments,
                     title: 'Edit Tarif Layanan',
                     onTap: () {},
                   ),
-                  const Divider(height: 1, color: Color(0xFFE0E3E5)),
+                  const Divider(height: 1, color: Color(0xFFE0E3E5)),*/
                   _buildSettingTile(
                     icon: Icons.storefront,
                     title: 'Info Usaha',
@@ -137,7 +139,9 @@ class SettingsScreen extends ConsumerWidget {
                   _buildSettingTile(
                     icon: Icons.qr_code_2,
                     title: 'Generate QRIS',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const QrisSettingsScreen()));
+                    },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
                   _buildSettingTile(
@@ -151,7 +155,9 @@ class SettingsScreen extends ConsumerWidget {
                   _buildSettingTile(
                     icon: Icons.history_edu,
                     title: 'Tutup Buku Harian',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const EndOfDayScreen()));
+                    },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
                   _buildSettingTile(

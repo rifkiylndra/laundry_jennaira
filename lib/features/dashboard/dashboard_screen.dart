@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
 import 'package:laundry_jennaira/features/dashboard/dashboard_provider.dart';
 import 'package:laundry_jennaira/features/order/widgets/create_order_bottomsheet.dart';
+import 'package:laundry_jennaira/features/inventory/providers/inventory_provider.dart';
+import 'package:laundry_jennaira/features/inventory/screens/inventory_screen.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -15,6 +17,10 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stats = ref.watch(dashboardStatsProvider);
+    final inventoryState = ref.watch(inventoryProvider);
+    
+    final inventoryItems = inventoryState.valueOrNull ?? [];
+    final lowStockItems = inventoryItems.where((item) => item.stock <= item.minStock).toList();
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
@@ -103,13 +109,18 @@ class DashboardScreen extends ConsumerWidget {
                           color: AppTheme.textPrimaryColor,
                         ),
                       ),
-                      Text(
-                        'Lihat Detail',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: AppTheme.accentColor,
+                      InkWell(
+                        onTap: () {
+                          context.go('/reports');
+                        },
+                        child: const Text(
+                          'Lihat Detail',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: AppTheme.accentColor,
+                          ),
                         ),
                       ),
                     ],
@@ -212,63 +223,66 @@ class DashboardScreen extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // Inventory Warning
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.expenseColor),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: AppTheme.expenseColor.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
+            if (lowStockItems.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppTheme.expenseColor),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: AppTheme.expenseColor.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.warning, color: AppTheme.expenseColor),
                     ),
-                    child: const Icon(Icons.warning, color: AppTheme.expenseColor),
-                  ),
-                  const SizedBox(width: 12),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Stok Deterjen Rendah',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppTheme.textPrimaryColor,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Stok ${lowStockItems.first.name} Rendah${lowStockItems.length > 1 ? ' (+${lowStockItems.length - 1} lainnya)' : ''}',
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppTheme.textPrimaryColor,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Sisa 1.2 Liter (Estimasi 2 hari)',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12,
-                            color: AppTheme.textSecondaryColor,
+                          Text(
+                            'Sisa ${lowStockItems.first.stock.toStringAsFixed(1)} ${lowStockItems.first.unit}',
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 12,
+                              color: AppTheme.textSecondaryColor,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Isi Ulang',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.accentColor,
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const InventoryScreen()));
+                      },
+                      child: const Text(
+                        'Isi Ulang',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.accentColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
             const SizedBox(height: 100), // Bottom padding
           ],
         ),

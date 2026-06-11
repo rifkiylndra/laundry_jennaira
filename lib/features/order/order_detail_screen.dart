@@ -7,6 +7,8 @@ import 'package:laundry_jennaira/features/order/order_provider.dart';
 import 'package:laundry_jennaira/features/order/widgets/payment_bottomsheet.dart';
 import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
+import 'package:laundry_jennaira/core/helpers/printer_helper.dart';
+import 'package:laundry_jennaira/core/helpers/wa_helper.dart';
 
 class OrderDetailScreen extends ConsumerWidget {
   final OrderModel order;
@@ -465,14 +467,56 @@ class OrderDetailScreen extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Always visible: Kirim Nota via WA
+            // Print Struk
             SizedBox(
               width: double.infinity,
               height: 48,
               child: OutlinedButton.icon(
-                onPressed: () {
-                  // TODO: Implement WhatsApp Launch (H-23)
-                  print('Kirim WA to ${order.custPhone}');
+                onPressed: () async {
+                  try {
+                    await PrinterHelper.printReceipt(order);
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(e.toString()), backgroundColor: AppTheme.expenseColor),
+                      );
+                    }
+                  }
+                },
+                icon: const Icon(Icons.print, color: AppTheme.primaryColor),
+                label: const Text(
+                  'Print Struk',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: AppTheme.primaryColor),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            // Kirim Nota via WA
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: OutlinedButton.icon(
+                onPressed: () async {
+                  try {
+                    await WaHelper.sendCustomerReceipt(order.custPhone ?? '', order);
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(e.toString()), backgroundColor: AppTheme.expenseColor),
+                      );
+                    }
+                  }
                 },
                 icon: const Icon(Icons.send, color: AppTheme.incomeColor), // WA-like color
                 label: const Text(

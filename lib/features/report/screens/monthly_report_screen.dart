@@ -9,6 +9,7 @@ import 'package:laundry_jennaira/core/utils/currency.dart';
 import 'package:laundry_jennaira/features/report/report_provider.dart';
 import 'package:laundry_jennaira/features/transaction/transaction_provider.dart';
 import 'package:laundry_jennaira/shared/models/transaction_model.dart';
+import 'package:laundry_jennaira/core/helpers/export_helper.dart';
 
 class CustomMonthYearPickerDialog extends StatefulWidget {
   final DateTime initialDate;
@@ -728,14 +729,28 @@ class _MonthlyReportScreenState extends ConsumerState<MonthlyReportScreen> {
             SizedBox(
               height: 56,
               child: OutlinedButton.icon(
-                onPressed: () {
-                  ref.read(reportNotifierProvider.notifier).exportCsv();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Data CSV berhasil di-export ke console!'),
-                      backgroundColor: AppTheme.incomeColor,
-                    ),
-                  );
+                onPressed: () async {
+                  try {
+                    final monthYear = _isDaily 
+                        ? DateFormat('dd_MMM_yyyy').format(_selectedDate)
+                        : DateFormat('MMM_yyyy').format(_selectedMonth);
+                    final path = await ExportHelper.exportMonthlyReport(displayedTransactions, monthYear);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Data berhasil diexport ke: $path'),
+                          backgroundColor: AppTheme.incomeColor,
+                          duration: const Duration(seconds: 4),
+                        ),
+                      );
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(e.toString()), backgroundColor: AppTheme.expenseColor),
+                      );
+                    }
+                  }
                 },
                 icon: const Icon(Icons.picture_as_pdf),
                 label: const Text(

@@ -40,11 +40,15 @@ dependencies:
   qr_flutter: ^4.1.0
   intl: ^0.19.0
   shared_preferences: ^2.2.0
-  image_picker: ^1.1.0
+  image_picker: ^1.2.2
   local_auth: ^2.3.0
   uuid: ^4.4.0
   freezed_annotation: ^3.1.0
   json_annotation: 4.9.0
+  print_bluetooth_thermal: ^1.2.1
+  url_launcher: ^6.3.2
+  path_provider: ^2.1.5
+  esc_pos_utils_plus: ^2.0.4
 
 dev_dependencies:
   flutter_test:

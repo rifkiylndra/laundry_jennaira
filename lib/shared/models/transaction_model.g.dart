@@ -15,6 +15,7 @@ _TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) =>
       orderId: json['order_id'] as String?,
       description: json['note'] as String?,
       photoUrl: json['photo_url'] as String?,
+      paymentMethod: json['payment_method'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -27,5 +28,6 @@ Map<String, dynamic> _$TransactionModelToJson(_TransactionModel instance) =>
       'order_id': instance.orderId,
       'note': instance.description,
       'photo_url': instance.photoUrl,
+      'payment_method': instance.paymentMethod,
       'created_at': instance.createdAt.toIso8601String(),
     };

@@ -16,6 +16,7 @@ abstract class TransactionModel with _$TransactionModel {
     @JsonKey(name: 'order_id') String? orderId,
     @JsonKey(name: 'note') String? description,
     @JsonKey(name: 'photo_url') String? photoUrl,
+    @JsonKey(name: 'payment_method') String? paymentMethod,
     @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _TransactionModel;
 

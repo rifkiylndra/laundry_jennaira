@@ -67,4 +67,30 @@ class TransactionNotifier extends _$TransactionNotifier {
       return local.year == monthYear.year && local.month == monthYear.month;
     }).toList();
   }
+
+  Map<String, int> getEndOfDaySummary() {
+    final todayTxs = getTransactionsByDate(DateTime.now());
+    int totalCash = 0;
+    int totalQris = 0;
+    int totalExpense = 0;
+
+    for (var t in todayTxs) {
+      if (t.type == 'income') {
+        if (t.paymentMethod == 'QRIS') {
+          totalQris += t.amount;
+        } else {
+          // Default to CASH if null or other
+          totalCash += t.amount;
+        }
+      } else if (t.type == 'expense') {
+        totalExpense += t.amount;
+      }
+    }
+
+    return {
+      'totalCash': totalCash,
+      'totalQris': totalQris,
+      'totalExpense': totalExpense,
+    };
+  }
 }

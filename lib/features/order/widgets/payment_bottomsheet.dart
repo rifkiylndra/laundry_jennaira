@@ -8,6 +8,7 @@ import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
 import 'package:laundry_jennaira/features/transaction/transaction_provider.dart';
 import 'package:laundry_jennaira/shared/models/transaction_model.dart';
+import 'package:laundry_jennaira/core/supabase_client.dart';
 import 'package:uuid/uuid.dart';
 
 class PaymentBottomSheet extends ConsumerStatefulWidget {
@@ -77,6 +78,7 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
         amount: _finalPrice,
         type: 'income',
         description: 'Pembayaran Pesanan ${widget.order.custName ?? widget.order.orderNo}',
+        paymentMethod: _paymentMethod == 'Tunai' ? 'CASH' : 'QRIS',
         createdAt: DateTime.now(),
       );
 
@@ -318,12 +320,33 @@ class _PaymentBottomSheetState extends ConsumerState<PaymentBottomSheet> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFCBD5E1)),
               ),
-              child: const Column(
+              child: Column(
                 children: [
-                  Icon(Icons.qr_code_scanner, size: 48, color: AppTheme.accentColor),
-                  SizedBox(height: 16),
-                  Text(
-                    'Silakan arahkan pelanggan untuk scan QRIS kasir. Pastikan pembayaran telah berhasil sebelum mengkonfirmasi.',
+                  const Text(
+                    'Scan QRIS di bawah ini:',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Image.network(
+                    supabase.storage.from('settings').getPublicUrl('qris/active_qris.png'),
+                    height: 200,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => const Column(
+                      children: [
+                        Icon(Icons.qr_code_scanner, size: 48, color: AppTheme.accentColor),
+                        SizedBox(height: 16),
+                        Text('Belum ada QRIS yang diatur.', style: TextStyle(color: AppTheme.expenseColor)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Pastikan pembayaran telah berhasil sebelum mengkonfirmasi.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Inter',

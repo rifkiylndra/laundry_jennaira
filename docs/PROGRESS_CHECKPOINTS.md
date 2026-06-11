@@ -87,15 +87,15 @@
   - [x] Laporan: Buat *Custom Date Picker* khusus untuk pemilihan Bulan dan Tahun pada Tab Bulanan.
   - [x] Order: Buat logika *Stepper* dinamis berdasarkan layanan (Cuci Gosok = 4 langkah, Cuci Kering = 3 langkah, Satuan = 3 langkah).
 
-- [ ] **H-23: Fitur Operasional (Settings & End of Day)**
-  - [ ] Settings: Buat halaman **Atur QRIS** (Fungsi *upload* foto QRIS statis ke Supabase Storage dan menampilkannya di aplikasi).
-  - [ ] Payment Modal: Tampilkan foto QRIS tersebut secara otomatis di `PaymentBottomSheet` jika kasir memilih metode QRIS.
-  - [ ] Settings: Buat halaman **Tutup Buku Harian** (Rekapitulasi otomatis total Pemasukan Tunai vs QRIS dan Pengeluaran hari ini).
+- [x] **H-23: Fitur Operasional (Settings & End of Day)**
+  - [x] Settings: Buat halaman **Atur QRIS** (Fungsi *upload* foto QRIS statis ke Supabase Storage dan menampilkannya di aplikasi).
+  - [x] Payment Modal: Tampilkan foto QRIS tersebut secara otomatis di `PaymentBottomSheet` jika kasir memilih metode QRIS.
+  - [x] Settings: Buat halaman **Tutup Buku Harian** (Rekapitulasi otomatis total Pemasukan Tunai vs QRIS dan Pengeluaran hari ini).
 
-- [ ] **H-24: Output, Sharing & Hardware (Cetak & Ekspor)**
-  - [ ] Integrasi package `print_bluetooth_thermal` untuk mencetak format struk belanja via printer kasir.
-  - [ ] Integrasi package `url_launcher` untuk mengirim nota digital pelanggan dan laporan Tutup Buku ke WhatsApp.
-  - [ ] Integrasi package `path_provider` untuk fitur *download* Laporan Bulanan (PDF/CSV) ke penyimpanan internal HP.
+- [x] **H-24: Output, Sharing & Hardware (Cetak & Ekspor)**
+  - [x] Integrasi package `print_bluetooth_thermal` untuk mencetak format struk belanja via printer kasir.
+  - [x] Integrasi package `url_launcher` untuk mengirim nota digital pelanggan dan laporan Tutup Buku ke WhatsApp.
+  - [x] Integrasi package `path_provider` untuk fitur *download* Laporan Bulanan (PDF/CSV) ke penyimpanan internal HP.
 
 - [ ] **H-25: UI/UX Polish & Offline Handling**
   - [ ] Database: *Wrap* seluruh operasi Supabase dengan `Try-Catch`.
