@@ -15,11 +15,14 @@ class PricingEngine {
 
   // Satuan Base Prices
   static const Map<String, int> satuanPrices = {
-    'Sprei': 12000,
-    'Selimut': 25000,
+    'Sprei Kecil (Single)': 8000,
+    'Sprei Besar (King/Queen)': 15000,
+    'Selimut Kecil/Tipis': 10000,
+    'Selimut Besar/Bedcover': 45000,
     'Sepatu': 20000,
     'Boneka': 15000,
-    'Karpet': 35000,
+    'Karpet Kecil/Tipis': 20000,
+    'Karpet Besar/Tebal': 50000,
   };
 
   /// Calculates the total price and discount for an order.

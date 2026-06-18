@@ -33,7 +33,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
 
   String _serviceType = 'Cuci Gosok'; // Cuci Kering, Cuci Gosok, Satuan
   String _duration = '3 Hari'; // 3 Hari, 2 Hari, 1 Hari, Express (6-8 Jam)
-  String _selectedItem = 'Sprei'; // Sprei, Selimut, Sepatu, Boneka, Karpet
+  String _selectedItem = 'Sprei Kecil (Single)';
 
   final List<String> _items = PricingEngine.satuanPrices.keys.toList();
 
@@ -378,6 +378,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
                         padding: const EdgeInsets.only(bottom: 16.0),
                         child: DropdownButtonFormField<String>(
                           value: _selectedItem,
+                          isExpanded: true,
                           decoration: InputDecoration(
                             labelText: 'Pilih Item',
                             labelStyle: const TextStyle(
@@ -397,9 +398,10 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                           ),
                           items: _items.map((item) {
+                            final price = PricingEngine.satuanPrices[item] ?? 0;
                             return DropdownMenuItem(
                               value: item,
-                              child: Text(item, style: const TextStyle(fontFamily: 'Inter')),
+                              child: Text('$item (${formatRupiah(price)})', style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
                             );
                           }).toList(),
                           onChanged: (value) {
