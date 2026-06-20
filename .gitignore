@@ -43,3 +43,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# AI Agent Documents
+AGENTS.md
+CLAUDE.md
+DESIGN.md
+GEMINI.md

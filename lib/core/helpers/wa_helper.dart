@@ -36,12 +36,12 @@ Simpan pesan ini sebagai bukti pengambilan. $shopFooter
 ''';
 
     final encodedMessage = Uri.encodeComponent(message);
-    final url = Uri.parse('whatsapp://send?phone=$formattedPhone&text=$encodedMessage');
+    final url = Uri.parse('https://wa.me/$formattedPhone?text=$encodedMessage');
 
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw Exception('Aplikasi WhatsApp tidak ditemukan di perangkat ini');
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      throw Exception('Gagal membuka WhatsApp. Pastikan aplikasi terinstal.');
     }
   }
 
@@ -73,12 +73,12 @@ Total Pengeluaran: ${formatRupiah(totalExpense)}
 ''';
 
     final encodedMessage = Uri.encodeComponent(message);
-    final url = Uri.parse('whatsapp://send?phone=$formattedPhone&text=$encodedMessage');
+    final url = Uri.parse('https://wa.me/$formattedPhone?text=$encodedMessage');
 
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw Exception('Aplikasi WhatsApp tidak ditemukan di perangkat ini');
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      throw Exception('Gagal membuka WhatsApp. Pastikan aplikasi terinstal.');
     }
   }
 }

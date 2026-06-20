@@ -1,33 +1,37 @@
 // lib/shared/utils/pricing_engine.dart
 
+import 'package:laundry_jennaira/features/settings/providers/pricing_provider.dart';
+
 class PricingEngine {
-  // Cuci Gosok Base Prices
-  static const int cuciGosok3Hari = 5000;
-  static const int cuciGosok2Hari = 6000;
-  static const int cuciGosok1Hari = 7000;
+  static const List<String> satuanItems = [
+    'Sprei Kecil (Single)',
+    'Sprei Besar (King/Queen)',
+    'Selimut Kecil/Tipis',
+    'Selimut Besar/Bedcover',
+    'Sepatu',
+    'Boneka',
+    'Karpet Kecil/Tipis',
+    'Karpet Besar/Tebal',
+  ];
 
-  // Cuci Kering Base Prices (Gosok - 1000)
-  static const int cuciKering3Hari = 4000;
-  static const int cuciKering2Hari = 5000;
-  static const int cuciKering1Hari = 6000;
-
-  static const int expressRate = 12000;
-
-  // Satuan Base Prices
-  static const Map<String, int> satuanPrices = {
-    'Sprei Kecil (Single)': 8000,
-    'Sprei Besar (King/Queen)': 15000,
-    'Selimut Kecil/Tipis': 10000,
-    'Selimut Besar/Bedcover': 45000,
-    'Sepatu': 20000,
-    'Boneka': 15000,
-    'Karpet Kecil/Tipis': 20000,
-    'Karpet Besar/Tebal': 50000,
-  };
+  static int getSatuanPrice(String item, PricingRates rates) {
+    switch (item) {
+      case 'Sprei Kecil (Single)': return rates.spreiKecil;
+      case 'Sprei Besar (King/Queen)': return rates.spreiBesar;
+      case 'Selimut Kecil/Tipis': return rates.selimutKecil;
+      case 'Selimut Besar/Bedcover': return rates.selimutBesar;
+      case 'Sepatu': return rates.sepatu;
+      case 'Boneka': return rates.boneka;
+      case 'Karpet Kecil/Tipis': return rates.karpetKecil;
+      case 'Karpet Besar/Tebal': return rates.karpetBesar;
+      default: return 12000;
+    }
+  }
 
   /// Calculates the total price and discount for an order.
   /// Returns a record `(totalPrice, discountAmount)`.
   static ({int totalPrice, int discountAmount}) calculatePrice({
+    required PricingRates rates,
     required String serviceType, // 'Cuci Kering', 'Cuci Gosok', or 'Satuan'
     required double weightKg,
     required String duration, // '3 Hari', '2 Hari', '1 Hari', 'Express (6-8 Jam)'
@@ -43,19 +47,19 @@ class PricingEngine {
       int diskon1Hari = 0;
 
       if (serviceType == 'Cuci Gosok') {
-        if (duration == '3 Hari') rate = cuciGosok3Hari;
-        else if (duration == '2 Hari') rate = cuciGosok2Hari;
-        else if (duration == '1 Hari') rate = cuciGosok1Hari;
-        diskon1Hari = cuciGosok1Hari;
+        if (duration == '3 Hari') rate = rates.cuciGosok3Hari;
+        else if (duration == '2 Hari') rate = rates.cuciGosok2Hari;
+        else if (duration == '1 Hari') rate = rates.cuciGosok1Hari;
+        diskon1Hari = rates.cuciGosok1Hari;
       } else if (serviceType == 'Cuci Kering') {
-        if (duration == '3 Hari') rate = cuciKering3Hari;
-        else if (duration == '2 Hari') rate = cuciKering2Hari;
-        else if (duration == '1 Hari') rate = cuciKering1Hari;
-        diskon1Hari = cuciKering1Hari;
+        if (duration == '3 Hari') rate = rates.cuciKering3Hari;
+        else if (duration == '2 Hari') rate = rates.cuciKering2Hari;
+        else if (duration == '1 Hari') rate = rates.cuciKering1Hari;
+        diskon1Hari = rates.cuciKering1Hari;
       }
 
       if (duration == 'Express (6-8 Jam)') {
-        rate = expressRate;
+        rate = rates.expressRate;
         if (effectiveWeight > 0 && effectiveWeight < 1.5) {
           effectiveWeight = 1.5;
         }
@@ -67,7 +71,7 @@ class PricingEngine {
         discountAmount = diskon1Hari;
       }
     } else if (serviceType == 'Satuan') {
-      int itemPrice = satuanPrices[selectedItem] ?? 12000;
+      int itemPrice = getSatuanPrice(selectedItem, rates);
       totalPrice = itemPrice * quantity;
       discountAmount = 0;
     }

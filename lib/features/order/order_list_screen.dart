@@ -9,6 +9,7 @@ import 'package:laundry_jennaira/features/order/order_provider.dart';
 import 'package:laundry_jennaira/features/order/widgets/create_order_bottomsheet.dart';
 import 'package:laundry_jennaira/features/order/order_detail_screen.dart';
 import 'package:laundry_jennaira/shared/models/order_model.dart';
+import 'package:intl/intl.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
 
 class OrderListScreen extends ConsumerStatefulWidget {
@@ -21,6 +22,8 @@ class OrderListScreen extends ConsumerStatefulWidget {
 class _OrderListScreenState extends ConsumerState<OrderListScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  DateTime? _selectedFilterDate;
+  String? _selectedFilterService;
 
   @override
   void dispose() {
@@ -65,13 +68,13 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
               ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(130),
+            preferredSize: const Size.fromHeight(180),
             child: Container(
               color: AppTheme.backgroundColor,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                     child: TextField(
                       controller: _searchController,
                       onChanged: (value) {
@@ -94,6 +97,162 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                           borderSide: const BorderSide(color: AppTheme.accentColor, width: 1.5),
                         ),
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
+                    child: Row(
+                      children: [
+                        // Date Filter Button
+                        Expanded(
+                          child: InkWell(
+                            onTap: () async {
+                              final date = await showDatePicker(
+                                context: context,
+                                initialDate: _selectedFilterDate ?? DateTime.now(),
+                                firstDate: DateTime(2020),
+                                lastDate: DateTime.now(),
+                                builder: (context, child) {
+                                  return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      colorScheme: const ColorScheme.light(
+                                        primary: AppTheme.primaryColor,
+                                        onPrimary: Colors.white,
+                                        onSurface: AppTheme.textPrimaryColor,
+                                      ),
+                                    ),
+                                    child: child!,
+                                  );
+                                },
+                              );
+                              if (date != null) {
+                                setState(() => _selectedFilterDate = date);
+                              }
+                            },
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedFilterDate != null ? AppTheme.accentColor.withValues(alpha: 0.1) : Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppTheme.accentColor.withValues(alpha: 0.3)),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.calendar_today, size: 14, color: _selectedFilterDate != null ? AppTheme.accentColor : AppTheme.textSecondaryColor),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    _selectedFilterDate != null ? DateFormat('dd MMM yyyy').format(_selectedFilterDate!) : 'Tanggal',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: _selectedFilterDate != null ? AppTheme.accentColor : AppTheme.textSecondaryColor,
+                                    ),
+                                  ),
+                                  if (_selectedFilterDate != null) ...[
+                                    const Spacer(),
+                                    GestureDetector(
+                                      onTap: () => setState(() => _selectedFilterDate = null),
+                                      child: const Icon(Icons.close, size: 16, color: AppTheme.expenseColor),
+                                    ),
+                                  ]
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        // Service Filter Dropdown/Button
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                ),
+                                builder: (ctx) {
+                                  final services = ['Semua', 'Cuci Gosok', 'Cuci Kering', 'Setrika', 'Satuan'];
+                                  return SafeArea(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Text(
+                                            'Pilih Layanan',
+                                            style: TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          ...services.map((s) => ListTile(
+                                            title: Text(
+                                              s,
+                                              style: TextStyle(
+                                                fontFamily: 'Inter',
+                                                fontWeight: _selectedFilterService == s || (_selectedFilterService == null && s == 'Semua') ? FontWeight.bold : FontWeight.normal,
+                                                color: _selectedFilterService == s || (_selectedFilterService == null && s == 'Semua') ? AppTheme.primaryColor : AppTheme.textPrimaryColor,
+                                              ),
+                                            ),
+                                            trailing: _selectedFilterService == s || (_selectedFilterService == null && s == 'Semua') 
+                                                ? const Icon(Icons.check, color: AppTheme.primaryColor) 
+                                                : null,
+                                            onTap: () {
+                                              setState(() => _selectedFilterService = s == 'Semua' ? null : s);
+                                              Navigator.pop(ctx);
+                                            },
+                                          )),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedFilterService != null ? AppTheme.accentColor.withValues(alpha: 0.1) : Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppTheme.accentColor.withValues(alpha: 0.3)),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.local_laundry_service, size: 14, color: _selectedFilterService != null ? AppTheme.accentColor : AppTheme.textSecondaryColor),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _selectedFilterService ?? 'Layanan',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: _selectedFilterService != null ? AppTheme.accentColor : AppTheme.textSecondaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                  if (_selectedFilterService != null) ...[
+                                    GestureDetector(
+                                      onTap: () => setState(() => _selectedFilterService = null),
+                                      child: const Icon(Icons.close, size: 16, color: AppTheme.expenseColor),
+                                    ),
+                                  ] else ...[
+                                    const Icon(Icons.arrow_drop_down, size: 16, color: AppTheme.textSecondaryColor),
+                                  ]
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const TabBar(
@@ -135,11 +294,29 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
             ),
           ),
           data: (orders) {
-            // Apply search filter
+            // Apply search and advanced filters
             var filteredOrders = orders.where((order) {
               final searchMatch = order.orderNo.toLowerCase().contains(_searchQuery) ||
                   (order.custName?.toLowerCase().contains(_searchQuery) ?? false);
-              return searchMatch;
+              
+              bool dateMatch = true;
+              if (_selectedFilterDate != null) {
+                final oDate = (order.createdAt ?? DateTime.now()).toLocal();
+                dateMatch = oDate.year == _selectedFilterDate!.year && 
+                            oDate.month == _selectedFilterDate!.month && 
+                            oDate.day == _selectedFilterDate!.day;
+              }
+
+              bool serviceMatch = true;
+              if (_selectedFilterService != null) {
+                if (_selectedFilterService == 'Satuan') {
+                   serviceMatch = order.service.startsWith('Satuan');
+                } else {
+                   serviceMatch = order.service == _selectedFilterService;
+                }
+              }
+
+              return searchMatch && dateMatch && serviceMatch;
             }).toList();
 
             // Split into tabs

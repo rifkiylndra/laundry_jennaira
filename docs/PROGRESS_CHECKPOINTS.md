@@ -102,6 +102,10 @@
   - [x] Database: *Wrap* seluruh operasi Supabase dengan `Try-Catch`.
   - [x] UI: Tampilkan Red SnackBar "Koneksi Terputus" jika gagal *insert/update*.
   - [x] UI: Buat *Empty States* (ilustrasi/teks indikator) jika daftar Pesanan atau Transaksi kosong.
+  - [x] UI: Perbaikan *layout overflow* pada layar Detail Order.
+  - [x] Fitur Tambahan: Fitur *Export* CSV bersanding dengan PDF untuk Laporan Bulanan.
+  - [x] Fitur Tambahan: Filter Tanggal dan Jenis Layanan pada Daftar Order.
+  - [x] Fitur Tambahan: Setup Tarif Dinamis menyeluruh untuk layanan Satuan.
 
 - [ ] **H-26 & H-27: UAT (User Acceptance Testing) & Final Build**
   - [ ] Build: Generate APK Release versi stabil terbaru.

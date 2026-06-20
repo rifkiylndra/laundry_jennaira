@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:laundry_jennaira/app/theme.dart';
 import 'package:laundry_jennaira/shared/utils/pricing_engine.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
 import 'package:laundry_jennaira/features/order/order_provider.dart';
 import 'package:laundry_jennaira/shared/models/order_model.dart';
 import 'package:uuid/uuid.dart';
+import 'package:laundry_jennaira/features/settings/providers/pricing_provider.dart';
 
 class CreateOrderBottomSheet extends ConsumerStatefulWidget {
   final String? initialServiceType;
@@ -30,12 +32,13 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
   final _addressController = TextEditingController();
   final _weightController = TextEditingController();
   final _qtyController = TextEditingController();
+  final _finalPriceController = TextEditingController();
 
   String _serviceType = 'Cuci Gosok'; // Cuci Kering, Cuci Gosok, Satuan
   String _duration = '3 Hari'; // 3 Hari, 2 Hari, 1 Hari, Express (6-8 Jam)
   String _selectedItem = 'Sprei Kecil (Single)';
 
-  final List<String> _items = PricingEngine.satuanPrices.keys.toList();
+  final List<String> _items = PricingEngine.satuanItems;
 
   int _totalPrice = 0;
   int _discountAmount = 0;
@@ -63,6 +66,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
     _addressController.dispose();
     _weightController.dispose();
     _qtyController.dispose();
+    _finalPriceController.dispose();
     super.dispose();
   }
 
@@ -71,6 +75,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
     int qty = int.tryParse(_qtyController.text) ?? 0;
 
     final calculation = PricingEngine.calculatePrice(
+      rates: ref.read(pricingProvider),
       serviceType: _serviceType,
       weightKg: weight,
       duration: _duration,
@@ -81,6 +86,9 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
     setState(() {
       _totalPrice = calculation.totalPrice;
       _discountAmount = calculation.discountAmount;
+      int finalPrice = _totalPrice - _discountAmount;
+      if (finalPrice < 0) finalPrice = 0;
+      _finalPriceController.text = finalPrice.toString();
     });
   }
 
@@ -99,7 +107,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
 
       final newOrder = OrderModel(
         id: const Uuid().v4(),
-        orderNo: 'LJ-${DateTime.now().millisecondsSinceEpoch.toString().substring(5)}',
+        orderNo: 'LJ-${DateFormat('ddMM-HHmmss').format(DateTime.now())}',
         custName: _nameController.text.isEmpty ? 'Tanpa Nama' : _nameController.text,
         custPhone: _phoneController.text,
         custAddress: _addressController.text,
@@ -107,7 +115,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
         service: _serviceType == 'Satuan' ? 'Satuan - $_selectedItem' : _serviceType,
         duration: durationVal,
         status: 'diterima',
-        price: _totalPrice,
+        price: (int.tryParse(_finalPriceController.text) ?? 0) + _discountAmount,
         discount: _discountAmount,
         isPaid: false,
       );
@@ -211,6 +219,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
 
   @override
   Widget build(BuildContext context) {
+    final currentRates = ref.watch(pricingProvider);
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     int finalPrice = _totalPrice - _discountAmount;
     if (finalPrice < 0) finalPrice = 0;
@@ -398,7 +407,7 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                           ),
                           items: _items.map((item) {
-                            final price = PricingEngine.satuanPrices[item] ?? 0;
+                            final price = PricingEngine.getSatuanPrice(item, currentRates);
                             return DropdownMenuItem(
                               value: item,
                               child: Text('$item (${formatRupiah(price)})', style: const TextStyle(fontFamily: 'Inter', fontSize: 14)),
@@ -459,13 +468,37 @@ class _CreateOrderBottomSheetState extends ConsumerState<CreateOrderBottomSheet>
                           color: AppTheme.expenseColor,
                         ),
                       ),
-                    Text(
-                      formatRupiah(finalPrice),
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.textPrimaryColor,
+                    const SizedBox(height: 4),
+                    SizedBox(
+                      width: 140,
+                      child: TextFormField(
+                        controller: _finalPriceController,
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.textPrimaryColor,
+                        ),
+                        decoration: InputDecoration(
+                          prefixText: 'Rp ',
+                          prefixStyle: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textPrimaryColor,
+                          ),
+                          isDense: true,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppTheme.accentColor, width: 2),
+                          ),
+                        ),
                       ),
                     ),
                   ],

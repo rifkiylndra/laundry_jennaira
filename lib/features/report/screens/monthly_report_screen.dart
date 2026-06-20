@@ -725,50 +725,109 @@ class _MonthlyReportScreenState extends ConsumerState<MonthlyReportScreen> {
             
             const SizedBox(height: 24),
 
-            // Action Button
-            SizedBox(
-              height: 56,
-              child: OutlinedButton.icon(
-                onPressed: () async {
-                  try {
-                    final monthYear = _isDaily 
-                        ? DateFormat('dd_MMM_yyyy').format(_selectedDate)
-                        : DateFormat('MMM_yyyy').format(_selectedMonth);
-                    final path = await ExportHelper.exportMonthlyReport(displayedTransactions, monthYear);
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Data berhasil diexport ke: $path'),
-                          backgroundColor: AppTheme.incomeColor,
-                          duration: const Duration(seconds: 4),
+            // Action Buttons
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 56,
+                    child: OutlinedButton.icon(
+                      onPressed: () async {
+                        try {
+                          final monthYear = _isDaily 
+                              ? DateFormat('dd_MMM_yyyy').format(_selectedDate)
+                              : DateFormat('MMM_yyyy').format(_selectedMonth);
+                          final path = await ExportHelper.exportMonthlyReportPdf(displayedTransactions, monthYear);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Berhasil! PDF tersimpan di:\n$path'),
+                                backgroundColor: AppTheme.incomeColor,
+                                duration: const Duration(seconds: 4),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(e.toString().replaceAll('Exception: ', '')), 
+                                backgroundColor: AppTheme.expenseColor
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.picture_as_pdf),
+                      label: const Text(
+                        'Export PDF',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    }
-                  } catch (e) {
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(e.toString()), backgroundColor: AppTheme.expenseColor),
-                      );
-                    }
-                  }
-                },
-                icon: const Icon(Icons.picture_as_pdf),
-                label: const Text(
-                  'Export CSV',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppTheme.accentColor,
+                        side: const BorderSide(color: AppTheme.accentColor, width: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppTheme.accentColor,
-                  side: const BorderSide(color: AppTheme.accentColor, width: 2),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: SizedBox(
+                    height: 56,
+                    child: OutlinedButton.icon(
+                      onPressed: () async {
+                        try {
+                          final monthYear = _isDaily 
+                              ? DateFormat('dd_MMM_yyyy').format(_selectedDate)
+                              : DateFormat('MMM_yyyy').format(_selectedMonth);
+                          final path = await ExportHelper.exportMonthlyReportCsv(displayedTransactions, monthYear);
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Berhasil! CSV tersimpan di:\n$path'),
+                                backgroundColor: AppTheme.incomeColor,
+                                duration: const Duration(seconds: 4),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(e.toString().replaceAll('Exception: ', '')), 
+                                backgroundColor: AppTheme.expenseColor
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.table_chart),
+                      label: const Text(
+                        'Export CSV',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppTheme.primaryColor,
+                        side: const BorderSide(color: AppTheme.primaryColor, width: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
             const SizedBox(height: 100),
           ],

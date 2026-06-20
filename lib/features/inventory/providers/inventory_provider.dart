@@ -24,6 +24,7 @@ class InventoryNotifier extends StateNotifier<AsyncValue<List<InventoryModel>>> 
           InventoryModel(id: const Uuid().v4(), name: 'Deterjen Cair', unit: 'kg', stock: 5.2, minStock: 2.0),
           InventoryModel(id: const Uuid().v4(), name: 'Pewangi', unit: 'L', stock: 0.8, minStock: 1.0),
           InventoryModel(id: const Uuid().v4(), name: 'Plastik Packing', unit: 'pcs', stock: 12.0, minStock: 50.0),
+          InventoryModel(id: const Uuid().v4(), name: 'Kantong Plastik Kresek', unit: 'pcs', stock: 100.0, minStock: 20.0),
         ];
         
         for (var item in defaults) {
@@ -46,6 +47,7 @@ class InventoryNotifier extends StateNotifier<AsyncValue<List<InventoryModel>>> 
         InventoryModel(id: const Uuid().v4(), name: 'Deterjen Cair', unit: 'kg', stock: 5.2, minStock: 2.0),
         InventoryModel(id: const Uuid().v4(), name: 'Pewangi', unit: 'L', stock: 0.8, minStock: 1.0),
         InventoryModel(id: const Uuid().v4(), name: 'Plastik Packing', unit: 'pcs', stock: 12.0, minStock: 50.0),
+        InventoryModel(id: const Uuid().v4(), name: 'Kantong Plastik Kresek', unit: 'pcs', stock: 100.0, minStock: 20.0),
       ];
       state = AsyncValue.data(defaults);
     }
