@@ -23,12 +23,22 @@ class WaHelper {
     final shopName = prefs.getString('business_name') ?? 'Laundry Jennaira';
     final shopFooter = prefs.getString('business_footer') ?? 'Terima kasih!';
 
+    final itemsSummaryList = order.items.map((item) {
+      final isSatuan = item.serviceName != 'Cuci Gosok' &&
+                       item.serviceName != 'Cuci Kering' &&
+                       item.serviceName != 'Setrika';
+      final unit = isSatuan ? 'Item' : 'kg';
+      final weightOrQty = isSatuan ? item.weightOrQty.toInt().toString() : item.weightOrQty.toString();
+      return '- ${item.serviceName} ($weightOrQty $unit): ${formatRupiah(item.price.round())}';
+    }).join('\n');
+
     final message = '''
 Halo, terima kasih telah menggunakan layanan $shopName!
 
 Berikut adalah rincian pesanan Anda:
 *Order ID:* ${order.orderNo}
-*Layanan:* ${order.service} (${order.service.toLowerCase() == 'satuan' ? '${order.weightKg.toInt()} Item' : '${order.weightKg} kg'})
+*Detail Layanan:*
+$itemsSummaryList
 *Total:* ${formatRupiah(finalPrice)}
 *Status:* ${order.status}
 
@@ -46,11 +56,17 @@ Simpan pesan ini sebagai bukti pengambilan. $shopFooter
   }
 
   static Future<void> sendEndOfDayReport(String ownerPhone, Map<String, dynamic> summary) async {
-    if (ownerPhone.isEmpty) {
+    String phoneToUse = ownerPhone;
+    if (phoneToUse.isEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+      phoneToUse = prefs.getString('business_phone') ?? '';
+    }
+
+    if (phoneToUse.isEmpty) {
       throw Exception('Nomor telepon Owner/Admin kosong');
     }
 
-    String formattedPhone = ownerPhone;
+    String formattedPhone = phoneToUse;
     if (formattedPhone.startsWith('0')) {
       formattedPhone = '62${formattedPhone.substring(1)}';
     } else if (formattedPhone.startsWith('+62')) {

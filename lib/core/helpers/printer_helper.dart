@@ -50,21 +50,26 @@ class PrinterHelper {
     bytes.addAll(generator.text('Order ID: ${order.orderNo}'));
     bytes.addAll(generator.hr());
 
-    // Item (Layanan tunggal per order di v1)
-    final unit = order.service.toLowerCase() == 'satuan' ? 'Item' : 'Kg';
-    bytes.addAll(generator.text(order.service));
-    bytes.addAll(generator.row([
-      PosColumn(
-        text: '${order.weightKg} $unit',
-        width: 6,
-        styles: const PosStyles(align: PosAlign.left),
-      ),
-      PosColumn(
-        text: formatRupiah(order.price),
-        width: 6,
-        styles: const PosStyles(align: PosAlign.right),
-      ),
-    ]));
+    // Items
+    for (var item in order.items) {
+      final isSatuan = item.serviceName != 'Cuci Gosok' &&
+                       item.serviceName != 'Cuci Kering' &&
+                       item.serviceName != 'Setrika';
+      final unit = isSatuan ? 'Item' : 'Kg';
+      bytes.addAll(generator.text(item.serviceName));
+      bytes.addAll(generator.row([
+        PosColumn(
+          text: '${item.weightOrQty} $unit',
+          width: 6,
+          styles: const PosStyles(align: PosAlign.left),
+        ),
+        PosColumn(
+          text: formatRupiah(item.price.round()),
+          width: 6,
+          styles: const PosStyles(align: PosAlign.right),
+        ),
+      ]));
+    }
     
     // Diskon jika ada
     if (order.discount > 0) {

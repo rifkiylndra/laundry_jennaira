@@ -91,4 +91,34 @@ class Auth extends _$Auth {
       rethrow;
     }
   }
+  Future<void> updateProfile(String name) async {
+    state = const AsyncValue.loading();
+    try {
+      final client = ref.read(supabaseClientProvider);
+      final user = client.auth.currentUser;
+      if (user == null) throw Exception('Sesi telah berakhir, silakan login kembali.');
+      
+      await client.from('profiles').update({'name': name}).eq('id', user.id);
+      
+      // Fetch updated profile
+      final profileData = await client
+          .from('profiles')
+          .select()
+          .eq('id', user.id)
+          .single();
+      state = AsyncValue.data(ProfileModel.fromJson(profileData));
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+      rethrow;
+    }
+  }
+
+  Future<void> changePassword(String newPassword) async {
+    try {
+      final client = ref.read(supabaseClientProvider);
+      await client.auth.updateUser(UserAttributes(password: newPassword));
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

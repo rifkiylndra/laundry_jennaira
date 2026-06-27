@@ -8,6 +8,7 @@ import 'package:laundry_jennaira/features/settings/screens/qris_settings_screen.
 import 'package:laundry_jennaira/features/settings/screens/end_of_day_screen.dart';
 import 'package:laundry_jennaira/features/settings/screens/business_info_screen.dart';
 import 'package:laundry_jennaira/features/settings/screens/edit_tarif_screen.dart';
+import 'package:laundry_jennaira/features/settings/screens/edit_profile_screen.dart';
 import 'package:laundry_jennaira/features/auth/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,74 +39,121 @@ class SettingsScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Profile Header
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFC4C6D0).withValues(alpha: 0.1)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
-                    blurRadius: 12,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primaryColor.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EditProfileScreen(),
                     ),
-                    child: const Icon(Icons.person, color: AppTheme.primaryColor, size: 32),
-                  ),
-                  const SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Mas Zamzami',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.primaryColor,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          const Text(
-                            'Owner / Admin',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppTheme.textSecondaryColor,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Container(width: 4, height: 4, decoration: const BoxDecoration(color: Color(0xFF747780), shape: BoxShape.circle)),
-                          ),
-                          const Text(
-                            'v1.0.4',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: AppTheme.textSecondaryColor,
-                            ),
-                          ),
-                        ],
+                  );
+                },
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: const Color(0xFFC4C6D0).withValues(alpha: 0.1),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.06),
+                        blurRadius: 12,
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
-                ],
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: AppTheme.primaryColor.withValues(alpha: 0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.person,
+                          color: AppTheme.primaryColor,
+                          size: 32,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    ref.watch(authProvider).value?.name ?? 'Uda Zamzami',
+                                    style: const TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppTheme.primaryColor,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                const Icon(
+                                  Icons.edit,
+                                  size: 16,
+                                  color: AppTheme.textSecondaryColor,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Text(
+                                  ref.watch(authProvider).value?.role == 'admin'
+                                      ? 'Owner / Admin'
+                                      : 'Kasir',
+                                  style: const TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppTheme.textSecondaryColor,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
+                                  child: Container(
+                                    width: 4,
+                                    height: 4,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF747780),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
+                                const Text(
+                                  'v1.0.5',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppTheme.textSecondaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -115,7 +163,9 @@ class SettingsScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFC4C6D0).withValues(alpha: 0.1)),
+                border: Border.all(
+                  color: const Color(0xFFC4C6D0).withValues(alpha: 0.1),
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.06),
@@ -130,7 +180,12 @@ class SettingsScreen extends ConsumerWidget {
                     icon: Icons.payments,
                     title: 'Edit Tarif Layanan',
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const EditTarifScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const EditTarifScreen(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
@@ -138,7 +193,12 @@ class SettingsScreen extends ConsumerWidget {
                     icon: Icons.storefront,
                     title: 'Info Usaha',
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const BusinessInfoScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const BusinessInfoScreen(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
@@ -146,7 +206,12 @@ class SettingsScreen extends ConsumerWidget {
                     icon: Icons.qr_code_2,
                     title: 'Generate QRIS',
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const QrisSettingsScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const QrisSettingsScreen(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
@@ -154,7 +219,12 @@ class SettingsScreen extends ConsumerWidget {
                     icon: Icons.inventory_2,
                     title: 'Manajemen Stok (Inventory)',
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const InventoryScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const InventoryScreen(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
@@ -162,7 +232,12 @@ class SettingsScreen extends ConsumerWidget {
                     icon: Icons.history_edu,
                     title: 'Tutup Buku Harian',
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const EndOfDayScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const EndOfDayScreen(),
+                        ),
+                      );
                     },
                   ),
                   const Divider(height: 1, color: Color(0xFFE0E3E5)),
@@ -244,7 +319,9 @@ class SettingsScreen extends ConsumerWidget {
             ),
             Icon(
               isDanger ? Icons.logout : Icons.chevron_right,
-              color: isDanger ? color.withValues(alpha: 0.6) : const Color(0xFF747780),
+              color: isDanger
+                  ? color.withValues(alpha: 0.6)
+                  : const Color(0xFF747780),
             ),
           ],
         ),

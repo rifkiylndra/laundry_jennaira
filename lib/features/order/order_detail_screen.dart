@@ -15,21 +15,23 @@ class OrderDetailScreen extends ConsumerWidget {
 
   const OrderDetailScreen({super.key, required this.order});
 
-  int _getCurrentStepIndex(String status, String serviceType) {
+  int _getCurrentStepIndex(String status, List<OrderItem> items) {
     status = status.toLowerCase();
-    serviceType = serviceType.toLowerCase();
+    final hasGosok = items.any((e) => e.serviceName == 'Cuci Gosok');
+    final hasKering = items.any((e) => e.serviceName == 'Cuci Kering');
+    final hasSetrika = items.any((e) => e.serviceName == 'Setrika');
+    final hasKiloan = hasGosok || hasKering || hasSetrika;
 
     if (status == 'diterima') return 0;
     if (status == 'selesai') return 99;
 
-    if (serviceType == 'cuci kering') {
-      if (status == 'dicuci') return 1;
-      if (status.contains('siap')) return 2;
-    } else if (serviceType == 'satuan') {
+    if (!hasKiloan) { // Satuan
       if (status == 'diproses' || status == 'dicuci' || status == 'setrika' || status == 'processing') return 1;
       if (status.contains('siap')) return 2;
-    } else {
-      // Cuci Gosok & Default
+    } else if (hasKering && !hasGosok && !hasSetrika) { // Cuci Kering only
+      if (status == 'dicuci') return 1;
+      if (status.contains('siap')) return 2;
+    } else { // Gosok, Setrika, or Mixed/Multi-service
       if (status == 'dicuci') return 1;
       if (status == 'setrika') return 2;
       if (status.contains('siap')) return 3;
@@ -39,7 +41,7 @@ class OrderDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int currentStep = _getCurrentStepIndex(order.status, order.service);
+    final int currentStep = _getCurrentStepIndex(order.status, order.items);
     final int finalPrice = (order.price - order.discount).clamp(0, double.infinity).toInt();
 
     return Scaffold(
@@ -94,6 +96,7 @@ class OrderDetailScreen extends ConsumerWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: Column(
@@ -118,27 +121,43 @@ class OrderDetailScreen extends ConsumerWidget {
                               color: AppTheme.textPrimaryColor,
                             ),
                           ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Durasi: ${order.durationDays} Hari ${order.remainingDaysText}',
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.textSecondaryColor,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     const SizedBox(width: 8),
                     Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: AppTheme.accentColor.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          order.service.toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.accentColor,
-                          ),
-                        ),
+                      child: Wrap(
+                        spacing: 4,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.end,
+                        children: order.items.map((e) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppTheme.accentColor.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              e.serviceName.toUpperCase(),
+                              style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                                color: AppTheme.accentColor,
+                              ),
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ],
@@ -194,16 +213,42 @@ class OrderDetailScreen extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(
-                          order.service.toLowerCase() == 'satuan' 
-                              ? '${order.weightKg.toInt()} Item'
-                              : '${order.weightKg} kg',
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimaryColor,
-                          ),
+                        Builder(
+                          builder: (context) {
+                            final kiloanItems = order.items.where((e) =>
+                                e.serviceName == 'Cuci Gosok' ||
+                                e.serviceName == 'Cuci Kering' ||
+                                e.serviceName == 'Setrika');
+                            final satuanItems = order.items.where((e) =>
+                                e.serviceName != 'Cuci Gosok' &&
+                                e.serviceName != 'Cuci Kering' &&
+                                e.serviceName != 'Setrika');
+
+                            String weightOrQtyLabel = '';
+                            if (kiloanItems.isNotEmpty && satuanItems.isNotEmpty) {
+                              final weight = kiloanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty);
+                              final qty = satuanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty).toInt();
+                              weightOrQtyLabel = '$weight kg + $qty Item';
+                            } else if (kiloanItems.isNotEmpty) {
+                              final weight = kiloanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty);
+                              weightOrQtyLabel = '$weight kg';
+                            } else if (satuanItems.isNotEmpty) {
+                              final qty = satuanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty).toInt();
+                              weightOrQtyLabel = '$qty Item';
+                            } else {
+                              weightOrQtyLabel = '0 kg';
+                            }
+
+                            return Text(
+                              weightOrQtyLabel,
+                              style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppTheme.textPrimaryColor,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -214,6 +259,76 @@ class OrderDetailScreen extends ConsumerWidget {
           ),
           
           // Divider
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Divider(color: Color(0xFFE2E8F0), thickness: 1, height: 1),
+          ),
+
+          // Items Breakdown list
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Rincian Layanan',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 12,
+                    color: AppTheme.textSecondaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                ...order.items.map((item) {
+                  final isSatuan = item.serviceName != 'Cuci Gosok' &&
+                                   item.serviceName != 'Cuci Kering' &&
+                                   item.serviceName != 'Setrika';
+                  final unit = isSatuan ? 'Item' : 'kg';
+                  final weightOrQty = isSatuan ? item.weightOrQty.toInt().toString() : item.weightOrQty.toString();
+                  
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.serviceName,
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppTheme.textPrimaryColor,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '$weightOrQty $unit',
+                          style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            color: AppTheme.textSecondaryColor,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          formatRupiah(item.price.round()),
+                          style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textPrimaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ),
+          
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Divider(color: Color(0xFFE2E8F0), thickness: 1, height: 1),
@@ -310,22 +425,25 @@ class OrderDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildStatusCard(int currentStep) {
-    final String serviceType = order.service.toLowerCase();
+    final hasGosok = order.items.any((e) => e.serviceName == 'Cuci Gosok');
+    final hasKering = order.items.any((e) => e.serviceName == 'Cuci Kering');
+    final hasSetrika = order.items.any((e) => e.serviceName == 'Setrika');
+    final hasKiloan = hasGosok || hasKering || hasSetrika;
     
     List<Map<String, dynamic>> steps;
-    if (serviceType == 'cuci kering') {
-      steps = [
-        {'title': 'Antrean', 'subtitle': 'Pesanan telah diterima kasir', 'icon': Icons.check_circle},
-        {'title': 'Dicuci', 'subtitle': 'Sedang dalam proses pencucian', 'icon': Icons.local_laundry_service},
-        {'title': 'Siap Diambil', 'subtitle': 'Menunggu diambil oleh pelanggan', 'icon': Icons.inventory_2},
-      ];
-    } else if (serviceType == 'satuan') {
+    if (!hasKiloan) { // Only Satuan items
       steps = [
         {'title': 'Antrean', 'subtitle': 'Pesanan telah diterima kasir', 'icon': Icons.check_circle},
         {'title': 'Diproses', 'subtitle': 'Sedang diproses', 'icon': Icons.cleaning_services},
         {'title': 'Siap Diambil', 'subtitle': 'Menunggu diambil oleh pelanggan', 'icon': Icons.inventory_2},
       ];
-    } else {
+    } else if (hasKering && !hasGosok && !hasSetrika) { // Only Cuci Kering
+      steps = [
+        {'title': 'Antrean', 'subtitle': 'Pesanan telah diterima kasir', 'icon': Icons.check_circle},
+        {'title': 'Dicuci', 'subtitle': 'Sedang dalam proses pencucian', 'icon': Icons.local_laundry_service},
+        {'title': 'Siap Diambil', 'subtitle': 'Menunggu diambil oleh pelanggan', 'icon': Icons.inventory_2},
+      ];
+    } else { // Gosok, Setrika, or Mixed/Multi-service
       steps = [
         {'title': 'Antrean', 'subtitle': 'Pesanan telah diterima kasir', 'icon': Icons.check_circle},
         {'title': 'Dicuci', 'subtitle': 'Sedang dalam proses pencucian', 'icon': Icons.local_laundry_service},
@@ -582,9 +700,14 @@ class OrderDetailScreen extends ConsumerWidget {
               builder: (context) {
                 String nextLabel = '';
                 String nextVal = '';
+                final hasGosok = order.items.any((e) => e.serviceName == 'Cuci Gosok');
+                final hasKering = order.items.any((e) => e.serviceName == 'Cuci Kering');
+                final hasSetrika = order.items.any((e) => e.serviceName == 'Setrika');
+                final hasKiloan = hasGosok || hasKering || hasSetrika;
+
                 switch (order.status.toLowerCase()) {
                   case 'diterima':
-                    if (order.service.toLowerCase() == 'satuan') {
+                    if (!hasKiloan) {
                       nextLabel = 'Update ke Diproses';
                       nextVal = 'diproses';
                     } else {
@@ -594,7 +717,7 @@ class OrderDetailScreen extends ConsumerWidget {
                     break;
                   case 'dicuci':
                   case 'diproses':
-                    if (order.service.toLowerCase() == 'cuci kering' || order.service.toLowerCase() == 'satuan') {
+                    if ((hasKering && !hasGosok && !hasSetrika) || !hasKiloan) {
                       nextLabel = 'Update ke Siap Diambil';
                       nextVal = 'siap_diambil';
                     } else {

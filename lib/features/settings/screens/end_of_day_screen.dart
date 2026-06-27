@@ -6,6 +6,7 @@ import 'package:laundry_jennaira/app/theme.dart';
 import 'package:laundry_jennaira/core/utils/currency.dart';
 import 'package:laundry_jennaira/features/transaction/transaction_provider.dart';
 import 'package:laundry_jennaira/core/helpers/wa_helper.dart';
+import 'package:laundry_jennaira/features/settings/providers/business_info_provider.dart';
 
 class EndOfDayScreen extends ConsumerWidget {
   const EndOfDayScreen({super.key});
@@ -136,8 +137,8 @@ class EndOfDayScreen extends ConsumerWidget {
             height: 56,
             child: FilledButton.icon(
               onPressed: () async {
-                // We use a dummy owner number here for demonstration.
-                final ownerPhone = '082392240627';
+                final businessInfo = ref.read(businessInfoNotifierProvider).value;
+                final ownerPhone = businessInfo?.phone ?? '';
                 try {
                   await WaHelper.sendEndOfDayReport(ownerPhone, summary);
                   if (context.mounted) {

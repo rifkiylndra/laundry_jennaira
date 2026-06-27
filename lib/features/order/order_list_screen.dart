@@ -310,9 +310,12 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
               bool serviceMatch = true;
               if (_selectedFilterService != null) {
                 if (_selectedFilterService == 'Satuan') {
-                   serviceMatch = order.service.startsWith('Satuan');
+                  serviceMatch = order.items.any((item) =>
+                      item.serviceName != 'Cuci Gosok' &&
+                      item.serviceName != 'Cuci Kering' &&
+                      item.serviceName != 'Setrika');
                 } else {
-                   serviceMatch = order.service == _selectedFilterService;
+                  serviceMatch = order.items.any((item) => item.serviceName == _selectedFilterService);
                 }
               }
 
@@ -531,33 +534,90 @@ class _OrderCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // Details: Weight & Price
-                        Row(
-                          children: [
-                            const Icon(Icons.shopping_bag_outlined, size: 16, color: AppTheme.textSecondaryColor),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${order.weightKg} kg',
-                              style: const TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 13,
-                                color: AppTheme.textSecondaryColor,
+                        // Details: Weight, Price, Duration
+                        Expanded(
+                          child: Wrap(
+                            spacing: 12,
+                            runSpacing: 4,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.shopping_bag_outlined, size: 16, color: AppTheme.textSecondaryColor),
+                                  const SizedBox(width: 4),
+                                  Builder(
+                                    builder: (context) {
+                                      final kiloanItems = order.items.where((e) =>
+                                          e.serviceName == 'Cuci Gosok' ||
+                                          e.serviceName == 'Cuci Kering' ||
+                                          e.serviceName == 'Setrika');
+                                      final satuanItems = order.items.where((e) =>
+                                          e.serviceName != 'Cuci Gosok' &&
+                                          e.serviceName != 'Cuci Kering' &&
+                                          e.serviceName != 'Setrika');
+
+                                      String weightOrQtyLabel = '';
+                                      if (kiloanItems.isNotEmpty && satuanItems.isNotEmpty) {
+                                        final weight = kiloanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty);
+                                        final qty = satuanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty).toInt();
+                                        weightOrQtyLabel = '$weight kg + $qty Item';
+                                      } else if (kiloanItems.isNotEmpty) {
+                                        final weight = kiloanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty);
+                                        weightOrQtyLabel = '$weight kg';
+                                      } else if (satuanItems.isNotEmpty) {
+                                        final qty = satuanItems.fold<double>(0.0, (sum, e) => sum + e.weightOrQty).toInt();
+                                        weightOrQtyLabel = '$qty Item';
+                                      } else {
+                                        weightOrQtyLabel = '0 kg';
+                                      }
+
+                                      return Text(
+                                        weightOrQtyLabel,
+                                        style: const TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 13,
+                                          color: AppTheme.textSecondaryColor,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(width: 12),
-                            const Icon(Icons.payments_outlined, size: 16, color: AppTheme.textSecondaryColor),
-                            const SizedBox(width: 4),
-                            Text(
-                              formatRupiah(order.price),
-                              style: const TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 13,
-                                color: AppTheme.textSecondaryColor,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.payments_outlined, size: 16, color: AppTheme.textSecondaryColor),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    formatRupiah(order.price),
+                                    style: const TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 13,
+                                      color: AppTheme.textSecondaryColor,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.schedule, size: 16, color: AppTheme.textSecondaryColor),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '${order.durationDays} Hari ${order.remainingDaysText}',
+                                    style: const TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 13,
+                                      color: AppTheme.textSecondaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        
+                        const SizedBox(width: 8),
                         // Payment Status Badge
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -570,10 +630,10 @@ class _OrderCard extends StatelessWidget {
                           child: Text(
                             order.isPaid ? 'Lunas' : 'Belum Lunas',
                             style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                              color: order.isPaid ? AppTheme.incomeColor : AppTheme.expenseColor,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: order.isPaid ? AppTheme.incomeColor : AppTheme.expenseColor,
                             ),
                           ),
                         ),
@@ -583,7 +643,7 @@ class _OrderCard extends StatelessWidget {
                     
                     // Service Type (Kiloan/Satuan)
                     Text(
-                      'Layanan: ${order.service}',
+                      'Layanan: ${order.items.map((e) => e.serviceName).join(", ")}',
                       style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 12,

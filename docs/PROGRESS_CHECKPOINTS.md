@@ -107,12 +107,18 @@
   - [x] Fitur Tambahan: Filter Tanggal dan Jenis Layanan pada Daftar Order.
   - [x] Fitur Tambahan: Setup Tarif Dinamis menyeluruh untuk layanan Satuan.
 
-- [ ] **H-26 & H-27: UAT (User Acceptance Testing) & Final Build**
-  - [ ] Build: Generate APK Release versi stabil terbaru.
-  - [ ] Testing: Sesi uji coba langsung (Cetak struk, Tutup Buku, dan scan QRIS) bersama Mas Zamzami di toko.
-  - [ ] Bug Fixes: Perbaikan kilat untuk temuan minor.
+- [x] **H-26 & H-27: UAT (User Acceptance Testing) & Final Build**
+  - [x] Build: Generate APK Release versi stabil terbaru.
+  - [x] Testing: Sesi uji coba langsung (Cetak struk, Tutup Buku, dan scan QRIS) bersama Mas Zamzami di toko.
+  - [x] Bug Fixes: Perbaikan kilat untuk temuan minor.
+
+- [x] **H-27.5: Post-UAT 2 Debugging & Refactoring (Revisi Final)**
+  - [x] **Multi-Layanan dalam 1 Order:** Refactor form pembuatan pesanan dan `OrderModel` agar mendukung lebih dari 1 layanan dalam satu ID *Invoice* yang sama.
+  - [x] **Perbaikan WA Tutup Buku:** Ubah nomor tujuan WA Laporan Tutup Buku yang masih *hardcode* agar mengambil data dinamis dari `businessInfoProvider` (Info Usaha).
+  - [x] **Layanan Setrika & Menu Beranda:** Tambahkan layanan khusus "Setrika" dengan tarif menyamai Cuci Kering ke dalam *Pricing Engine*. Perbaiki *mapping* tombol pada menu "Layanan Cepat" di Beranda agar sesuai.
+  - [x] **UI Durasi Layanan & Sisa Waktu:** Tampilkan detail "Durasi Layanan" (hari) dan hitung mundur "Sisa Hari" pada *card* di daftar order dan detail order.
+  - [x] **Keamanan (Edit Profil & Ubah Sandi):** Menambahkan halaman untuk mengubah nama profil (dinamis) dan mengubah kata sandi akun di menu Pengaturan.
 
 - [ ] **H-28: Go Live! 🎉**
   - [ ] Database: Deploy dan bersihkan data *testing* menjadi *Production*.
   - [ ] Handover: Serah terima sistem POS Laundry Jennaira secara resmi.
-  

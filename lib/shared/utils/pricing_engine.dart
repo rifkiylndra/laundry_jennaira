@@ -1,6 +1,7 @@
 // lib/shared/utils/pricing_engine.dart
 
 import 'package:laundry_jennaira/features/settings/providers/pricing_provider.dart';
+import 'package:laundry_jennaira/shared/models/order_model.dart';
 
 class PricingEngine {
   static const List<String> satuanItems = [
@@ -15,7 +16,9 @@ class PricingEngine {
   ];
 
   static int getSatuanPrice(String item, PricingRates rates) {
-    switch (item) {
+    // Strip "Satuan - " prefix if present to be robust
+    final cleanItem = item.startsWith('Satuan - ') ? item.substring(9) : item;
+    switch (cleanItem) {
       case 'Sprei Kecil (Single)': return rates.spreiKecil;
       case 'Sprei Besar (King/Queen)': return rates.spreiBesar;
       case 'Selimut Kecil/Tipis': return rates.selimutKecil;
@@ -28,52 +31,64 @@ class PricingEngine {
     }
   }
 
-  /// Calculates the total price and discount for an order.
+  /// Calculates the total price and discount for an order based on items list and duration in days.
   /// Returns a record `(totalPrice, discountAmount)`.
+  /// durationDays: 0 for Express, 1 for 1 Day, 2 for 2 Days, 3 for 3 Days.
   static ({int totalPrice, int discountAmount}) calculatePrice({
     required PricingRates rates,
-    required String serviceType, // 'Cuci Kering', 'Cuci Gosok', or 'Satuan'
-    required double weightKg,
-    required String duration, // '3 Hari', '2 Hari', '1 Hari', 'Express (6-8 Jam)'
-    required String selectedItem,
-    required int quantity,
+    required List<OrderItem> items,
+    required int durationDays,
   }) {
     int totalPrice = 0;
     int discountAmount = 0;
 
-    if (serviceType == 'Cuci Kering' || serviceType == 'Cuci Gosok') {
-      double effectiveWeight = weightKg;
-      int rate = 0;
-      int diskon1Hari = 0;
+    for (var item in items) {
+      final name = item.serviceName;
+      final weightOrQty = item.weightOrQty;
 
-      if (serviceType == 'Cuci Gosok') {
-        if (duration == '3 Hari') rate = rates.cuciGosok3Hari;
-        else if (duration == '2 Hari') rate = rates.cuciGosok2Hari;
-        else if (duration == '1 Hari') rate = rates.cuciGosok1Hari;
-        diskon1Hari = rates.cuciGosok1Hari;
-      } else if (serviceType == 'Cuci Kering') {
-        if (duration == '3 Hari') rate = rates.cuciKering3Hari;
-        else if (duration == '2 Hari') rate = rates.cuciKering2Hari;
-        else if (duration == '1 Hari') rate = rates.cuciKering1Hari;
-        diskon1Hari = rates.cuciKering1Hari;
-      }
+      if (name == 'Cuci Gosok' || name == 'Cuci Kering' || name == 'Setrika') {
+        double effectiveWeight = weightOrQty;
+        int rate = 0;
+        int diskon1Hari = 0;
 
-      if (duration == 'Express (6-8 Jam)') {
-        rate = rates.expressRate;
-        if (effectiveWeight > 0 && effectiveWeight < 1.5) {
-          effectiveWeight = 1.5;
+        if (name == 'Cuci Gosok') {
+          if (durationDays == 3) {
+            rate = rates.cuciGosok3Hari;
+          } else if (durationDays == 2) {
+            rate = rates.cuciGosok2Hari;
+          } else if (durationDays == 1) {
+            rate = rates.cuciGosok1Hari;
+          }
+          diskon1Hari = rates.cuciGosok1Hari;
+        } else {
+          // 'Cuci Kering' and 'Setrika' share the same rates
+          if (durationDays == 3) {
+            rate = rates.cuciKering3Hari;
+          } else if (durationDays == 2) {
+            rate = rates.cuciKering2Hari;
+          } else if (durationDays == 1) {
+            rate = rates.cuciKering1Hari;
+          }
+          diskon1Hari = rates.cuciKering1Hari;
         }
-      }
 
-      totalPrice = (effectiveWeight * rate).round();
+        if (durationDays == 0) { // Express
+          rate = rates.expressRate;
+          if (effectiveWeight > 0 && effectiveWeight < 1.5) {
+            effectiveWeight = 1.5;
+          }
+        }
 
-      if (duration == '1 Hari' && effectiveWeight > 5.0) {
-        discountAmount = diskon1Hari;
+        totalPrice += (effectiveWeight * rate).round();
+
+        if (durationDays == 1 && effectiveWeight > 5.0) {
+          discountAmount += diskon1Hari;
+        }
+      } else {
+        // Satuan items
+        int itemPrice = getSatuanPrice(name, rates);
+        totalPrice += (itemPrice * weightOrQty).round();
       }
-    } else if (serviceType == 'Satuan') {
-      int itemPrice = getSatuanPrice(selectedItem, rates);
-      totalPrice = itemPrice * quantity;
-      discountAmount = 0;
     }
 
     return (totalPrice: totalPrice, discountAmount: discountAmount);
